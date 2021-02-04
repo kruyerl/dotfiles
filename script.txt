@@ -1,0 +1,8 @@
+#zshrc
+ln -s ~/.dotfiles/.zshrc ~/.zshrc
+
+#Neovim
+ln -s ~/.dotfiles/nvim ~/.config/nvim
+
+# Alacritty
+ln -s ~/.dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml
