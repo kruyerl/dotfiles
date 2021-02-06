@@ -1,8 +1,11 @@
 #zshrc
-ln -s ~/.dotfiles/.zshrc ~/.zshrc
-
+sudo apt update && sudo apt install zsh -y && sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" && git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions && git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && rm -rf ~/.zshrc && ln -s ~/.dotfiles/.zshrc ~/.zshrc
+
+#NVM
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | zsh && source .zshrc && nvm install --lts
+
 #Neovim
-ln -s ~/.dotfiles/nvim ~/.config/nvim
+sudo add-apt-repository ppa:neovim-ppa/unstable -y && sudo apt update && sudo apt install neovim -y && ln -s ~/.dotfiles/nvim ~/.config/nvim
 
 # Alacritty
-ln -s ~/.dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml
+sudo apt update && sudo apt install alacritty -y && mkdir .config/alacritty && ln -s ~/.dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml
