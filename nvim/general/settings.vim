@@ -17,7 +17,7 @@ syntax enable
 " === UI settings === " 
 set signcolumn=yes
 set ruler
-set nowrap
+"set nowrap
 set cursorline
 set showtabline=2
 "set number

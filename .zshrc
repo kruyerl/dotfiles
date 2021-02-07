@@ -106,6 +106,4 @@ export NVM_DIR="$HOME/.nvm"
 
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
-if [[ -n "$PS1"  ]] && [[ -z "$TMUX"  ]] ; then
-    tmux attach-session -t ssh_tmux || tmux new-session -s ssh_tmux
-fi
+
