@@ -1,11 +1,88 @@
-#zshrc
-sudo apt update && sudo apt install zsh -y && sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" && git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions && git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && rm -rf ~/.zshrc && ln -s ~/.dotfiles/.zshrc ~/.zshrc
+#/bin/bash
 
-#NVM
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | zsh && source .zshrc && nvm install --lts
+#updates & drivers
+echo "[-] Update and install base software & drivers [-]"
+sudo apt update && sudo apt upgrade -y 
+sudo apt update && sudo apt dist-upgrade
+sudo apt update && sudo apt full-upgrade
+sudo ubuntu-drivers autoinstall
 
-#Neovim
-sudo add-apt-repository ppa:neovim-ppa/unstable -y && sudo apt update && sudo apt install neovim -y && ln -s ~/.dotfiles/nvim ~/.config/nvim
+#necessities
+echo "[-] Installing necessities [-]"
+sudo apt install git curl zsh snapd caffeine gparted neofetch htop -y
+
+#gnome extras
+echo "[-] Installing gnome stuff [-]"
+sudo apt install gnome-tweak-tool gnome-shell-extensions -y
+
+#software allowances
+echo "[-] Enabling software things [-]"
+sudo apt install software-properties-common ubuntu-restricted-extras
+
+#ohmyzsh
+echo "[-] Installing zsh [-]"	
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 
+rm -rf ~/.zshrc && ln -s ~/.dotfiles/.zshrc ~/.zshrc
+
+#setup javascript
+echo "[-] Installing Javascript [-]"
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | zsh
+source .zshrc
+nvm install --lts
+
+#setup python
+echo "[-] Installing Python [-]"
+sudo apt update && sudo apt install python2 python3 -y
+sudo apt update && sudo apt install python3-venv python3-pip -y
+
+#homebrew
+echo "[-] Installing Homebrew [-]"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> /home/kruyerl/.zshrc
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+
+#fonts
+echo "[-] Installing Fonts [-]"
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
+unzip FiraCode.zip -d ~/.fonts
+fc-cache -fv
+
+#set up ssh
+echo "[-] Setting up SSH [-]"
+sudo apt update && sudo apt install openssh-server -y
+sudo ufw allow ssh
+ssh-keygen -t rsa -b 4096 -C "kruyerl@gmail.com"
+
+#editors
+echo "[-] Installing Code Editors [-]"
+sudo add-apt-repository ppa:neovim-ppa/unstable
+sudo apt update && sudo apt install neovim code -y
+ln -s ~/.dotfiles/nvim ~/.config/nvim
 
 # Alacritty
 sudo apt update && sudo apt install alacritty -y && mkdir .config/alacritty && ln -s ~/.dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml
+
+#browsers
+echo "[-] Installing Browsers [-]"
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+sudo apt-get update && sudo apt install google-chrome-stable
+
+#spotify
+echo "[-] Installing Spotify [-]"
+curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add - 
+echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+sudo apt update && sudo apt install spotify-client -y
+
+#software
+echo "[-] Installing Additional Software [-]"
+sudo apt update && sudo apt install vlc zoom -y
+
+#cleanups
+echo "[-] Cleaning Up [-]"
+sudo apt autoremove && sudo apt autoclean
+
+
