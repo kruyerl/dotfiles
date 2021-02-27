@@ -7,6 +7,12 @@ sudo apt update && sudo apt dist-upgrade
 sudo apt update && sudo apt full-upgrade
 sudo ubuntu-drivers autoinstall
 
+#git
+sudo apt install git
+git config --global user.email "kruyerl@gmail.com"
+git config --global user.name "Luke Kruyer"
+git clone https://github.com/kruyerl/.dotfiles.git ~/.dotfiles
+
 #necessities
 echo "[-] Installing necessities [-]"
 sudo apt install git curl zsh snapd caffeine gparted neofetch htop -y
@@ -80,6 +86,18 @@ sudo apt update && sudo apt install spotify-client -y
 #software
 echo "[-] Installing Additional Software [-]"
 sudo apt update && sudo apt install vlc zoom -y
+
+
+# CLI TOOLS
+sudo apt install fzf
+sudo apt install ripgrep
+sudo apt install universal-ctags
+sudo apt install silversearcher-ag
+sudo apt install fd-find
+sudo apt install bcal
+sudo apt install s-tuib stress
+curl -sSL https://raw.githubusercontent.com/PierreKieffer/pitop/master/install/install_pitop64.sh | bash
+sudo apt install htop neofetch
 
 #cleanups
 echo "[-] Cleaning Up [-]"
