@@ -18,6 +18,7 @@ echo "[-] Installing necessities [-]"
 sudo apt install git curl zsh snapd caffeine gparted neofetch htop tmux -y
 sudo apt install fzf ripgrep universal-ctags silversearcher-ag fd-find
 sudo apt install s-tui stress htop neofetch
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
 ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
 
 #gnome extras
