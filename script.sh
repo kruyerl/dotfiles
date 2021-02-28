@@ -13,9 +13,12 @@ git config --global user.email "kruyerl@gmail.com"
 git config --global user.name "Luke Kruyer"
 git clone https://github.com/kruyerl/.dotfiles.git ~/.dotfiles
 
-#necessities
+# CLI TOOLS
 echo "[-] Installing necessities [-]"
-sudo apt install git curl zsh snapd caffeine gparted neofetch htop -y
+sudo apt install git curl zsh snapd caffeine gparted neofetch htop tmux -y
+sudo apt install fzf ripgrep universal-ctags silversearcher-ag fd-find
+sudo apt install s-tui stress htop neofetch
+ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
 
 #gnome extras
 echo "[-] Installing gnome stuff [-]"
@@ -35,26 +38,20 @@ rm -rf ~/.zshrc && ln -s ~/.dotfiles/.zshrc ~/.zshrc
 
 #setup javascript
 echo "[-] Installing Javascript [-]"
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | zsh
+curl -fsSL https://fnm.vercel.app/install | bash
 source .zshrc
-nvm install --lts
 
 #setup python
 echo "[-] Installing Python [-]"
 sudo apt update && sudo apt install python2 python3 -y
 sudo apt update && sudo apt install python3-venv python3-pip -y
 
-#homebrew
-echo "[-] Installing Homebrew [-]"
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> /home/kruyerl/.zshrc
-eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-
 #fonts
 echo "[-] Installing Fonts [-]"
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
-unzip FiraCode.zip -d ~/.fonts
+unzip ~/FiraCode.zip -d ~/.fonts
 fc-cache -fv
+rm -rf ~/Firacode.zip
 
 #set up ssh
 echo "[-] Setting up SSH [-]"
@@ -62,42 +59,18 @@ sudo apt update && sudo apt install openssh-server -y
 sudo ufw allow ssh
 ssh-keygen -t rsa -b 4096 -C "kruyerl@gmail.com"
 
+#raspberrypi system stats
+curl -sSL https://raw.githubusercontent.com/PierreKieffer/pitop/master/install/install_pitop64.sh | bash
+
 #editors
 echo "[-] Installing Code Editors [-]"
 sudo add-apt-repository ppa:neovim-ppa/unstable
-sudo apt update && sudo apt install neovim code -y
+sudo apt update && sudo apt install neovim -y
 ln -s ~/.dotfiles/nvim ~/.config/nvim
-
-# Alacritty
-sudo apt update && sudo apt install alacritty -y && mkdir .config/alacritty && ln -s ~/.dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml
-
-#browsers
-echo "[-] Installing Browsers [-]"
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
-sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-sudo apt-get update && sudo apt install google-chrome-stable
-
-#spotify
-echo "[-] Installing Spotify [-]"
-curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add - 
-echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-sudo apt update && sudo apt install spotify-client -y
 
 #software
 echo "[-] Installing Additional Software [-]"
 sudo apt update && sudo apt install vlc zoom -y
-
-
-# CLI TOOLS
-sudo apt install fzf
-sudo apt install ripgrep
-sudo apt install universal-ctags
-sudo apt install silversearcher-ag
-sudo apt install fd-find
-sudo apt install bcal
-sudo apt install s-tuib stress
-curl -sSL https://raw.githubusercontent.com/PierreKieffer/pitop/master/install/install_pitop64.sh | bash
-sudo apt install htop neofetch
 
 #cleanups
 echo "[-] Cleaning Up [-]"
