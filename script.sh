@@ -64,9 +64,11 @@ curl -sSL https://raw.githubusercontent.com/PierreKieffer/pitop/master/install/i
 
 #editors
 echo "[-] Installing Code Editors [-]"
-sudo add-apt-repository ppa:neovim-ppa/unstable
-sudo apt update && sudo apt install neovim -y
+#sudo add-apt-repository ppa:neovim-ppa/unstable
+#sudo apt update && sudo apt install neovim -y
+sudo snap install --edge nvim --classic
 ln -s ~/.dotfiles/nvim ~/.config/nvim
+
 
 #software
 echo "[-] Installing Additional Software [-]"
