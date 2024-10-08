@@ -1,5 +1,15 @@
 echo "seeding"
 
+# fonts
+ln -sf ~/dotfiles/assets/fonts ~/.fonts
+fc-cache -f -v
+
+# themes
+ln -sf ~/dotfiles/assets/themes ~/.themes
+
+# icons/cursors
+ln -sf ~/dotfiles/assets/icons ~/.icons
+
 # zshrc
 ln -sf ~/dotfiles/configs/zshrc ~/.zshrc
 
