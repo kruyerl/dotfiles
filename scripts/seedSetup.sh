@@ -6,6 +6,9 @@ mkdir -p ~/.config
 ln -sf ~/dotfiles/assets/fonts ~/.fonts
 fc-cache -f -v
 
+# wallpapers
+ln -sf ~/dotfiles/assets/wallpapers ~/Pictures/Wallpapers
+
 # themes
 ln -sf ~/dotfiles/assets/themes ~/.themes
 

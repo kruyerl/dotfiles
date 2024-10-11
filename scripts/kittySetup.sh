@@ -1,4 +1,4 @@
-curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+url -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 
 # Create symbolic links to add kitty and kitten to PATH (assuming ~/.local/bin is in
 mkdir ~/.local/bin
@@ -15,4 +15,5 @@ sed -i "s|Exec=kitty|Exec=$(readlink -f ~)/.local/kitty.app/bin/kitty|g" ~/.loca
 echo 'kitty.desktop' > ~/.config/xdg-terminals.list
 
 echo 'choose new default terminal'
+gsettings set org.gnome.desktop.default-applications.terminal exec 'kitty'
 update-alternatives --config x-terminal-emulator
