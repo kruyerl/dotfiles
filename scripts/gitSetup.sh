@@ -1,6 +1,8 @@
 sudo apt install git
 git config --global user.email "kruyerl@gmail.com" && git config --global user.name "kruyerl"
 
+git remote set-url origin git@github.com:kruyerl/dotfiles.git
+
 ssh-keygen -t ed25519 -C "kruyerl@gmail.com"
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
