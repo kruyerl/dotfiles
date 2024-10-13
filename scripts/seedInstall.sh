@@ -2,7 +2,7 @@ echo "Installing"
 
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y software-properties-common build-essential
-sudo apt install -y git curl wget tmux unzip 
+sudo apt install -y git curl wget tmux unzip fuse libfuse2
 sudo apt autoremove && sudo apt autoclean
 
 # Configure Git
