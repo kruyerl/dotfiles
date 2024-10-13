@@ -17,3 +17,7 @@ echo 'kitty.desktop' > ~/.config/xdg-terminals.list
 echo 'choose new default terminal'
 gsettings set org.gnome.desktop.default-applications.terminal exec 'kitty'
 update-alternatives --config x-terminal-emulator
+
+# kitty
+mkdir -p ~/.config/kitty
+ln -sf ~/dotfiles/configs/kitty.conf ~/.config/kitty/kitty.conf
