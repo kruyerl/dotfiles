@@ -21,10 +21,6 @@ ln -sf ~/dotfiles/configs/zshrc ~/.zshrc
 # tmux
 ln -sf ~/dotfiles/configs/tmux.conf ~/.tmux.conf
 
-# kitty
-mkdir -p ~/.config/kitty
-ln -sf ~/dotfiles/configs/kitty.conf ~/.config/kitty/kitty.conf
-
 # nvim
 ln -sf ~/dotfiles/configs/nvim ~/.config/nvim
 
