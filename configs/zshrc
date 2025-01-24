@@ -19,6 +19,7 @@ fi
 alias zshconf="mate ~/.zshrc"
 alias dotconf="nvim ~/dotfiles"
 alias la="ls -a"
+alias :q="exit"
 
 # NVIM
 export PATH="$PATH:/opt/nvim-linux64/bin"
