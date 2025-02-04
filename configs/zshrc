@@ -33,3 +33,4 @@ fi
 
 # Created by `pipx` on 2024-12-17 14:36:38
 export PATH="$PATH:/home/ldk/.local/bin"
+autoload -U compinit; compinit
