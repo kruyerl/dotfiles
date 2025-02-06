@@ -50,3 +50,4 @@ vim.opt.termguicolors = true -- enable 24-bit RGB colors
 -- fold
 vim.opt.foldmethod = "marker"
 vim.opt.foldlevel = 99
+
