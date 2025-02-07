@@ -1,53 +1,69 @@
-vim.opt.autoindent = true
-vim.opt.smartindent = true
-vim.opt.shiftround = true
-vim.cmd("set expandtab")
-vim.cmd("set tabstop=2")
-vim.cmd("set softtabstop=2")
-vim.cmd("set shiftwidth=2")
+local map = vim.keymap.set
+local opt = vim.opt
+local cmd = vim.cmd
+local g = vim.g
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+opt.autoindent = true
+opt.smartindent = true
+opt.shiftround = true
+cmd("set expandtab")
+cmd("set tabstop=4")
+cmd("set softtabstop=4")
+cmd("set shiftwidth=4")
 
-vim.opt.backspace = {"eol", "start", "indent"} -- allow backspacing over everything in insert mode
-vim.opt.clipboard = "unnamedplus" -- allow neovim to access the system clipboard
-vim.opt.fileencoding = "utf-8" -- the encoding written to a file
-vim.opt.encoding = "utf-8" -- the encoding
-vim.opt.matchpairs = {"(:)", "{:}", "[:]", "<:>"}
+g.mapleader = " "
+g.maplocalleader = "\\"
+
+opt.backspace = {"eol", "start", "indent"} -- allow backspacing over everything in insert mode
+opt.clipboard = "unnamedplus" -- allow neovim to access the system clipboard
+opt.fileencoding = "utf-8" -- the encoding written to a file
+opt.encoding = "utf-8" -- the encoding
+opt.matchpairs = {"(:)", "{:}", "[:]", "<:>"}
 
 -- search
-vim.opt.hlsearch = true -- highlight all matches on previous search pattern
-vim.opt.ignorecase = true -- ignore case in search patterns
-vim.opt.smartcase = true -- smart case
-vim.opt.wildignore = vim.opt.wildignore + {"*/node_modules/*", "*/.git/*", "*/vendor/*"}
-vim.opt.wildmenu = true -- make tab completion for files/buffers act like bash
+opt.hlsearch = true -- highlight all matches on previous search pattern
+opt.ignorecase = true -- ignore case in search patterns
+opt.smartcase = true -- smart case
+opt.wildignore = opt.wildignore + {"*/node_modules/*", "*/.git/*", "*/vendor/*"}
+opt.wildmenu = true -- make tab completion for files/buffers act like bash
 
 -- ui
-vim.opt.cmdheight = 0 -- more space in the neovim command line for displaying messages
-vim.opt.cursorline = true -- highlight the current line
-vim.opt.laststatus = 2 -- only the last window will always have a status line
-vim.opt.lazyredraw = true -- don"t update the display while executing macros
-vim.opt.list = true
+opt.cmdheight = 0 -- more space in the neovim command line for displaying messages
+opt.cursorline = true -- highlight the current line
+opt.laststatus = 2 -- only the last window will always have a status line
+opt.lazyredraw = true -- don"t update the display while executing macros
+opt.list = true
+
 -- You can also add "space" or "eol", but I feel it"s quite annoying
-vim.opt.listchars = {
+opt.listchars = {
     tab = "┊ ",
     trail = "·",
-    extends = "»",
+
     precedes = "«",
     nbsp = "×"
 }
-vim.opt.mouse = "a" -- allow the mouse to be used in neovim
-vim.opt.number = true -- set numbered lines
-vim.opt.relativenumber = true
-vim.opt.signcolumn = "number"
-vim.opt.scrolloff = 18 -- minimal number of screen lines to keep above and below the cursor
-vim.opt.sidescrolloff = 3 -- minimal number of screen columns to keep to the left and right (horizontal) of the cursor if wrap is `false`
-vim.opt.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
-vim.opt.splitbelow = true -- open new split below
-vim.opt.splitright = true -- open new split to the right
-vim.opt.wrap = false -- display a long line
-vim.opt.termguicolors = true -- enable 24-bit RGB colors
--- fold
-vim.opt.foldmethod = "marker"
-vim.opt.foldlevel = 99
+opt.mouse = "a" -- allow the mouse to be used in neovim
+opt.number = true -- set numbered lines
+opt.relativenumber = true
+opt.signcolumn = "number"
+opt.scrolloff = 18 -- minimal number of screen lines to keep above and below the cursor
+opt.sidescrolloff = 3 -- minimal number of screen columns to keep to the left and right (horizontal) of the cursor if wrap is `false`
+opt.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
+opt.splitbelow = true -- open new split below
+opt.splitright = true -- open new split to the right
+opt.wrap = false -- display a long line
+opt.termguicolors = true -- enable 24-bit RGB colors
 
+-- fold
+opt.foldmethod = "marker"
+opt.foldlevel = 99
+
+
+-- Better pane movement
+map("n", "<C-H>", "<C-w>v", { desc = "Go to Left Window", remap = true })
+map("n", "<C-J>", "<C-w>s", { desc = "Go to Left Window", remap = true })
+
+map("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true })
+map("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
+map("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
+map("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
