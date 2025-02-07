@@ -13,11 +13,11 @@ return {
   },
   {
     "folke/tokyonight.nvim",
-    opt = {
+    opts = {
       transparent = true,
       styles = {
         sidebars = "transparent",
-        float = "transparent",
+        floats = "transparent",
       },
     },
   },
@@ -26,7 +26,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "gruvbox",
+      colorscheme = "tokyonight",
     },
   },
 }
