@@ -11,9 +11,9 @@ local cmd = vim.cmd
 opt.cmdheight = 0
 
 -- tabstop
-cmd("set tabstop=4")
-cmd("set softtabstop=4")
-cmd("set shiftwidth=4")
+-- cmd("set tabstop=4")
+-- cmd("set softtabstop=4")
+-- cmd("set shiftwidth=4")
 
 -- scrolloff
 opt.scrolloff = 18
