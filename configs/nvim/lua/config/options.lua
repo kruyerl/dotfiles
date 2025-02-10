@@ -15,6 +15,9 @@ opt.cmdheight = 0
 -- cmd("set softtabstop=4")
 -- cmd("set shiftwidth=4")
 
+-- Colorcolumn at character x
+opt.colorcolumn = "79"
+
 -- scrolloff
 opt.scrolloff = 18
 opt.sidescrolloff = 3

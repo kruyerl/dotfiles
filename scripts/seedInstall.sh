@@ -2,7 +2,20 @@ echo "Installing"
 
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y software-properties-common build-essential
-sudo apt install -y git curl wget tmux unzip fuse libfuse2 ranger bat tree lsd 
+sudo apt install -y git
+sudo apt install -y curl
+sudo apt install -y wget
+sudo apt install -y tmux
+sudo apt install -y unzip
+sudo apt install -y fuse
+sudo apt install -y libfuse2
+sudo apt install -y ranger
+sudo apt install -y bat
+sudo apt install -y tree
+sudo apt install -y lsd
+sudo apt install -y lsd
+sudo apt install -y lsd
+sudo apt install -y lsd
 sudo apt autoremove && sudo apt autoclean
 
 # Configure Git
