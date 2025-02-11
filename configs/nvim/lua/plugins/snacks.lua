@@ -1,34 +1,28 @@
-return {
-  "folke/snacks.nvim",
-
-  opts = {
-    dashboard = {
-      preset = {
-        pick = function(cmd, opts)
-          return LazyVim.pick(cmd, opts)()
-        end,
-        header = [[
-       ██╗      █████╗ ███████╗██╗   ██╗██╗   ██╗██╗███╗   ███╗          Z
-       ██║     ██╔══██╗╚══███╔╝╚██╗ ██╔╝██║   ██║██║████╗ ████║      Z    
-       ██║     ███████║  ███╔╝  ╚████╔╝ ██║   ██║██║██╔████╔██║   z       
-       ██║     ██╔══██║ ███╔╝    ╚██╔╝  ╚██╗ ██╔╝██║██║╚██╔╝██║ z         
-       ███████╗██║  ██║███████╗   ██║    ╚████╔╝ ██║██║ ╚═╝ ██║           
-       ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝     ╚═══╝  ╚═╝╚═╝     ╚═╝           
-]],
-                -- stylua: ignore
-                ---@type snacks.dashboard.Item[]
-                keys = {
-                    { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
-                    { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-                    { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
-                    { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-                    { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
-                    { icon = " ", key = "s", desc = "Restore Session", section = "session" },
-                    { icon = " ", key = "x", desc = "Lazy Extras", action = ":LazyExtras" },
-                    { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
-                    { icon = " ", key = "q", desc = "Quit", action = ":qa" },
-                },
-      },
+return{
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      bigfile = { enabled = true },
+      dashboard = { enabled = true },
+      explorer = { enabled = true },
+      indent = { enabled = true },
+      input = { enabled = true },
+      picker = { enabled = true },
+      notifier = { enabled = true },
+      quickfile = { enabled = true },
+      scope = { enabled = true },
+      scroll = { enabled = true },
+      statuscolumn = { enabled = true },
+      words = { enabled = true },
     },
-  },
+    keys = {
+      -- Top Pickers & Explorer
+      { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+      { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
+      { "<leader>b", function() Snacks.picker.buffers() end, desc = "Buffers" },
+      { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
+    }
+  }
 }
