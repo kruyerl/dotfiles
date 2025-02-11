@@ -56,7 +56,7 @@ opt.listchars = {
 }
 opt.mouse = "a" -- Enable mouse support
 opt.number = true
-opt.relativenumber = false
+opt.relativenumber = true
 opt.signcolumn = "yes" -- Always show sign column
 opt.scrolloff = 18
 opt.sidescrolloff = 3
