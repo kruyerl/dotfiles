@@ -1,17 +1,21 @@
-return{
+return {
   {
-    "neovim/nvim-lspconfig",
-    dependencies = { "williamboman/mason.nvim", "williamboman/mason-lspconfig.nvim" },
+    "neovim/nvim-lspconfig",    -- LSP client
     config = function()
-      require("mason").setup()
-      require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "tsserver", "pyright" }, -- Add your preferred LSPs
+      -- Setting up ESLint with tsserver
+      require('lspconfig').tsserver.setup({
+        settings = {
+          javascript = { format = { enable = false } },  -- Disable formatting in TSServer
+          typescript = { format = { enable = false } },  -- Disable formatting in TSServer
+        },
+        on_attach = function(client, bufnr)
+          -- Enable eslint
+          if client.name == "tsserver" then
+            vim.cmd('LspInstall eslint')
+          end
+        end,
       })
-
-      local lspconfig = require("lspconfig")
-      lspconfig.lua_ls.setup({})
-      lspconfig.tsserver.setup({})
-      lspconfig.pyright.setup({})
     end,
-  }
+  },
 }
+
