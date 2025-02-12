@@ -20,13 +20,31 @@ return{
   },
   keys = {
     -- Top Pickers & Explorer
-    { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+    { "<leader>ff", function() Snacks.picker.smart({layout = "ivy"}) end, desc = "Smart Find Files" },
     { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
-    { "<leader>b", function() Snacks.picker.buffers() end, desc = "Buffers" },
-    { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
+    { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+    { "<leader>fg", function() Snacks.picker.grep() end, desc = "Grep" },
     -- Top Pickers & Explorer
-    { "<leader>xX", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
-    { "<leader>xx", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer Diagnostics" },
-    { "<leader>m", function() Snacks.picker.run({ cmd = "Copilot panel" }) end, mode = { "n" }, desc = "Copilot Panel in Snacks Picker" },
+    -- { "<leader>xX", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
+    -- { "<leader>xx", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer Diagnostics" },
+    -- { "<leader>m", function() Snacks.picker.run({ cmd = "Copilot panel" }) end, mode = { "n" }, desc = "Copilot Panel in Snacks Picker" },
+    {
+      "<leader><leader>",
+      desc = "description",
+      function()
+        Snacks.win({
+          file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
+          width = 0.6,
+          height = 0.6,
+          wo = {
+            spell = false,
+            wrap = false,
+            signcolumn = "yes",
+            statuscolumn = " ",
+            conceallevel = 3,
+          },
+        })
+      end,
+    }
   }
 }

@@ -3,4 +3,4 @@ return {
   version = false,
   lazy = true,
   opts = {}
-  }
+}
