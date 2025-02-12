@@ -1,9 +1,20 @@
 return{
   {
     "echasnovski/mini.statusline",
-    config = function()
-      require("mini.statusline").setup({})
-    end,
+    version = false,
+    opts = {
+      use_icons = true,
+      set_vim_settings = true,
+    }
+  },
+  {
+    'echasnovski/mini.tabline', 
+    lazy = true,
+    version = false,
+    opts = {
+      tabpage_section = "right",
+      show_icons = true
+    }
   }
 }
 

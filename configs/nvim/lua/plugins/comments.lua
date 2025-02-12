@@ -1,3 +1,7 @@
 return{
-{ "folke/todo-comments.nvim", opts = {} },
+  { 
+    "folke/todo-comments.nvim", 
+    lazy= true,
+    opts = {} 
+  },
 }

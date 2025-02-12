@@ -1,9 +1,8 @@
 return {
   {
     "lewis6991/gitsigns.nvim",
-    config = function()
-      local conf = require("gitsigns")
-      conf.setup({
+    lazy = true,
+    opts = {
         -- signs = {
         --   add          = { text = '┃' },
         --   change       = { text = '┃' },
@@ -54,9 +53,13 @@ return {
         },
 
 
-      })
+      }
 
-    end,
   },
+  {
+   "echasnovski/mini.diff",
+   opts = {},
+
+  }
 }
 
