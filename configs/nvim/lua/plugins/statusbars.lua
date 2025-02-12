@@ -1,6 +1,7 @@
 return{
   {
     "echasnovski/mini.statusline",
+    event = "VeryLazy",
     version = false,
     opts = {
       use_icons = true,
@@ -8,8 +9,8 @@ return{
     }
   },
   {
-    'echasnovski/mini.tabline', 
-    lazy = true,
+    'echasnovski/mini.tabline',
+    event = "VeryLazy",
     version = false,
     opts = {
       tabpage_section = "right",

@@ -1,45 +1,86 @@
 return {
+  -- Completion engine
   {
-    "saghen/blink.cmp",
-    dependencies = { "rafamadriz/friendly-snippets" }, -- Optional snippets
-
-    version = "*",
-    opts = {
-      keymap = { preset = "super-tab" },
-      appearance = {
-        use_nvim_cmp_as_default = true,
-        nerd_font_variant = "mono",
-      },
-      signature = { enabled = true },
-      sources = {
-        -- add lazydev to your completion providers
-        per_filetype = {
-          codecompanion = { "codecompanion" },
-        },
-        default = { "lazydev", "lsp", "path", "snippets", "buffer" },
-        providers = {
-
-          lazydev = {
-            name = "LazyDev",
-            module = "lazydev.integrations.blink",
-            -- make lazydev completions top priority (see `:h blink.cmp`)
-            score_offset = 100,
-          },
-        },
-      }
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",     -- LSP completion source
+      "hrsh7th/cmp-buffer",       -- Buffer completion
+      "hrsh7th/cmp-path",         -- Path completion
+      "L3MON4D3/LuaSnip",         -- Snippet engine
+      "saadparwaiz1/cmp_luasnip", -- Snippet source
+      "zbirenbaum/copilot-cmp",   -- Copilot source
+      "onsails/lspkind.nvim"      -- LSP Formatting
     },
+    config = function()
+      local cmp = require("cmp")
+      local luasnip = require("luasnip")
+      local lspkind = require('lspkind')
+
+      require("copilot_cmp").setup()
+
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ["<C-j>"] = cmp.mapping.select_next_item(),
+          ["<C-k>"] = cmp.mapping.select_prev_item(),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        }),
+        formatting = {
+          format = lspkind.cmp_format({
+            mode = 'symbol',
+            maxwidth = {
+              menu = 50,
+              abbr = 50,
+            },
+            ellipsis_char = '...',
+            show_labelDetails = true,
+            symbol_map = {
+              Copilot = "",
+              Text = "󰉿",
+              Method = "󰆧",
+              Function = "󰊕",
+              Constructor = "",
+              Field = "󰜢",
+              Variable = "󰀫",
+              Class = "󰠱",
+              Interface = "",
+              Module = "",
+              Property = "󰜢",
+              Unit = "󰑭",
+              Value = "󰎠",
+              Enum = "",
+              Keyword = "󰌋",
+              Snippet = "",
+              Color = "󰏘",
+              File = "󰈙",
+              Reference = "󰈇",
+              Folder = "󰉋",
+              EnumMember = "",
+              Constant = "󰏿",
+              Struct = "󰙅",
+              Event = "",
+              Operator = "󰆕",
+              TypeParameter = "",
+            },
+
+          })
+        },
+        sources = cmp.config.sources({
+          { name = "copilot", group_index = 3 },
+          { name = "nvim_lsp", group_index = 2 },
+          { name = "luasnip", group_index = 2 },
+          { name = "buffer", group_index = 3 },
+          { name = "path", group_index = 3 },
+        }),
+      })
+    end,
   },
-  {
-    "folke/lazydev.nvim",
-    ft = "lua", -- only load on lua files
-    opts = {
-      library = {
-        -- See the configuration section for more details
-        -- Load luvit types when the `vim.uv` word is found
-        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-      },
-    },
-  },
+
+  -- LSP Configuration
   {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -47,36 +88,23 @@ return {
       "williamboman/mason-lspconfig.nvim",
     },
     config = function()
-      -- Initialize mason
       require("mason").setup()
-
-      -- Ensure LSP servers are installed automatically
       require("mason-lspconfig").setup({
         ensure_installed = { "lua_ls", "tsserver", "pyright" },
         automatic_installation = true,
       })
+
       local lspconfig = require("lspconfig")
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
 
-      -- Set up individual LSP servers
-      lspconfig.lua_ls.setup({
-        on_attach = function(client, bufnr)
-          -- Keybindings or other LSP configuration can go here
-          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr })
-        end,
-      })
-      lspconfig.tsserver.setup({
-        on_attach = function(client, bufnr)
-          -- Example keybinding for tsserver
-          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr })
-        end,
-      })
-      lspconfig.pyright.setup({
-        on_attach = function(client, bufnr)
-          -- Example keybinding for pyright
-          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr })
-        end,
-      })
-
+      -- Set up LSP servers
+      local servers = { "lua_ls", "tsserver", "pyright" }
+      for _, server in ipairs(servers) do
+        lspconfig[server].setup({
+          capabilities = capabilities,
+        })
+      end
 
       -- Custom diagnostic icons
       vim.diagnostic.config({
@@ -102,6 +130,12 @@ return {
         local hl = "DiagnosticSign" .. type
         vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
       end
+
+      -- Keybindings for diagnostics
+      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous Diagnostic" })
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
+      vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show Diagnostic" })
+      vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Diagnostics List" })
     end,
   }
 }
