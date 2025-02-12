@@ -1,8 +1,8 @@
 return {
   {
-    "folke/tokyonight.nvim",  -- Replace with your colorscheme plugin
-    lazy = false,  -- Load immediately
-    priority = 1000,  -- Ensure it loads before other UI plugins
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
     opts = {
       transparent = true,
       styles = {

@@ -1,4 +1,4 @@
 return {
   "petertriho/nvim-scrollbar",
-  lazy = true
+  -- lazy = true
 }

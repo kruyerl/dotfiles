@@ -1,6 +1,5 @@
 return {
-  -- Core GitHub Copilot Setup
-  {
+  { -- Core GitHub Copilot Setup
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
@@ -10,8 +9,8 @@ return {
           enabled = true,
           auto_refresh = true,
           keymap = {
-            jump_prev = "[[",
-            jump_next = "]]",
+            jump_prev = "kk",
+            jump_next = "jj",
             accept = "<CR>",
             refresh = "gr",
             open = "<M-CR>"
@@ -27,12 +26,12 @@ return {
           hide_during_completion = true,
           debounce = 75,
           keymap = {
-            accept = "<M-l>",
+            accept = "<C-l>",
             accept_word = false,
             accept_line = false,
-            next = "<M-]>",
-            prev = "<M-[>",
-            dismiss = "<C-]>",
+            next = "]]",
+            prev = "[[",
+            dismiss = "<Esc>",
           },
         },
         filetypes = {
@@ -45,8 +44,7 @@ return {
     },
   },
 
-  -- Copilot LSP Completion for nvim-cmp
-  {
+  { -- Copilot LSP Completion for nvim-cmp
     "zbirenbaum/copilot-cmp",
     dependencies = { "zbirenbaum/copilot.lua" },
     config = function()
@@ -54,8 +52,7 @@ return {
     end,
   },
 
-  -- Copilot Chat (Optional)
-  {
+  { -- Copilot Chat (Optional)
     "CopilotC-Nvim/CopilotChat.nvim",
     dependencies = {
       { "zbirenbaum/copilot.lua" },
