@@ -1,6 +1,6 @@
 # Reload conf with r
 unbind r
-bind z source-file ~/.tmux.conf
+bind r source-file ~/.tmux.conf
 
 set-option -g focus-events on
 set -sa terminal-overrides "*:Tc"
@@ -47,30 +47,29 @@ bind t select-window -t 4
 # List of plugins
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'catppuccin/tmux'
+# set -g @plugin 'egel/tmux-gruvbox'
 set -g @plugin 'christoomey/vim-tmux-navigator'
-set -g @plugin 'rose-pine/tmux'
 
+# catppuccin config
+set -g @catppuccin_window_status_style "rounded"
+set -g @catppuccin_window_number_position "right"
+set -g @catppuccin_window_default_fill "number"
+set -g @catppuccin_window_default_text "#W"
+set -g @catppuccin_window_current_fill "number"
+set -g @catppuccin_window_current_text "#W"
+set -g @catppuccin_status_left_separator  " "
+set -g @catppuccin_status_right_separator ""
+set -g @catppuccin_status_fill "icon"
+set -g @catppuccin_status_connect_separator "no"
+set -g @catppuccin_directory_text "#{pane_current_path}"
+set -g status-left ""
+set -g  status-right "#{E:@catppuccin_status_directory}"
+set -ag status-right "#{E:@catppuccin_status_session}"
 
-set -g @rose_pine_variant 'dawn' # Options are 'main', 'moon' or 'dawn'
-
-
-
-
-
-
-# persist tmux sessions after computer restart
-# https://github.com/tmux-plugins/tmux-resurrect
-set -g @plugin 'tmux-plugins/tmux-resurrect'
-# allow tmux-ressurect to capture pane contents
-set -g @resurrect-capture-pane-contents 'on'
-
-# automatically saves sessions for you every 15 minutes (this must be the last plugin)
-# https://github.com/tmux-plugins/tmux-continuum
-set -g @plugin 'tmux-plugins/tmux-continuum'
-# enable tmux-continuum functionality
-set -g @continuum-restore 'on'
-# Set the save interval in minutes, default is 15
-set -g @continuum-save-interval '5'
+# gruvbox config
+# set -g @tmux-gruvbox 'dark'
+# set -g @tmux-gruvbox-statusbar-alpha 'true'
 
 if "test ! -d ~/.tmux/plugins/tpm" \
    "run 'git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins'"

@@ -70,7 +70,7 @@ return {
           })
         },
         sources = cmp.config.sources({
-          { name = "copilot", group_index = 3 },
+          { name = "copilot", group_index = 2 },
           { name = "nvim_lsp", group_index = 2 },
           { name = "luasnip", group_index = 2 },
           { name = "buffer", group_index = 3 },
@@ -85,10 +85,15 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
       "williamboman/mason.nvim",
+      "folke/lazydev.nvim",
       "williamboman/mason-lspconfig.nvim",
     },
     config = function()
-      require("mason").setup()
+      require("mason").setup({
+        ensure_installed = {
+      "stylua", "black", "prettier_d",
+    }
+      })
       require("mason-lspconfig").setup({
         ensure_installed = { "lua_ls", "tsserver", "pyright" },
         automatic_installation = true,

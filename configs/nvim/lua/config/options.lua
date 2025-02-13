@@ -6,8 +6,6 @@ local opt = vim.opt
 local cmd = vim.cmd
 local g = vim.g
 
-
-
 -- Indentation
 opt.autoindent = true
 opt.smartindent = true
@@ -43,7 +41,7 @@ opt.wildmenu = true
 
 -- UI Settings
 opt.cmdheight = 0 -- Hide command line when not in use (NVIM 0.9+)
-opt.cursorline = true -- Highlight current line
+opt.cursorline = false -- Highlight current line
 opt.laststatus = 2 -- Always show status line
 opt.lazyredraw = true -- Optimize macro execution
 opt.list = true
