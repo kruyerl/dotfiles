@@ -9,13 +9,13 @@ return{
     }
   },
   {
-    'echasnovski/mini.tabline',
-    event = "VeryLazy",
-    version = false,
-    opts = {
-      tabpage_section = "right",
-      show_icons = true
-    }
+    -- 'echasnovski/mini.tabline',
+    -- event = "VeryLazy",
+    -- version = false,
+    -- opts = {
+    --   tabpage_section = "right",
+    --   show_icons = false
+    -- }
   }
 }
 
