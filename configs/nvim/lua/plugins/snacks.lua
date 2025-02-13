@@ -37,7 +37,6 @@ return {
 			"<leader>b",
 			function()
 				Snacks.picker.buffers({
-					-- I always want my buffers picker to start in normal mode
 					on_show = function()
 						vim.cmd.stopinsert()
 					end,
@@ -64,9 +63,37 @@ return {
 		{
 			"<leader>n",
 			function()
-				Snacks.picker.notifications()
+				Snacks.picker.notifications({
+					on_show = function()
+						vim.cmd.stopinsert()
+					end,
+					finder = "snacks_notifier",
+					format = "notification",
+					preview = "preview",
+					formatters = {
+						severity = {
+							level = true,
+							pos = "left", -- position of the diagnostics
+							icons = true, -- show severity icons
+						},
+					},
+					confirm = "close",
+					layout = "vertical",
+				})
 			end,
 			desc = "Notification History",
+		},
+		{
+			"<leader>fw",
+			function()
+				Snacks.picker.grep_word({
+					on_show = function()
+						vim.cmd.stopinsert()
+					end,
+					layout = "ivy",
+				})
+			end,
+			desc = "Grep",
 		},
 		{
 			"<leader>fg",
