@@ -23,6 +23,7 @@
   "mini.statusline": { "branch": "main", "commit": "20837fbf075dba0f09ef60987612d4ee552895e1" },
   "neovim": { "branch": "main", "commit": "20c7940da844aa4f162a64e552ae3c7e9fdc3b93" },
   "nvim-cmp": { "branch": "main", "commit": "12509903a5723a876abd65953109f926f4634c30" },
+  "nvim-highlight-colors": { "branch": "main", "commit": "16a3cd4a32a655c8537de6e5643c234a9b38183a" },
   "nvim-lint": { "branch": "master", "commit": "6e9dd545a1af204c4022a8fcd99727ea41ffdcc8" },
   "nvim-lspconfig": { "branch": "master", "commit": "6c17f8656f667727b27f5f598463afedb7791b18" },
   "nvim-scrollbar": { "branch": "main", "commit": "6994eb9f73d5fdc36ee2c8717940e8c853e51a49" },
