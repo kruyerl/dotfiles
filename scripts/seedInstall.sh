@@ -47,6 +47,9 @@ sudo mv nvim.appimage /usr/local/bin/nvim
 # Install Yazi
 cargo install --locked --git https://github.com/sxyazi/yazi.git yazi-fm yazi-cli
 
+# Install Zoxide
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+
 # Install Fast Node Manager
 curl -fsSL https://fnm.vercel.app/install | bash --skip-shell
 
