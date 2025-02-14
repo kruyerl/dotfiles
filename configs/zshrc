@@ -16,13 +16,16 @@ if [[ -n $SSH_CONNECTION ]]; then
 fi
 
 # Aliases
-alias zshconf="mate ~/.zshrc"
+alias zshconf="nvim ~/.zshrc"
 alias dotconf="nvim ~/dotfiles"
 alias la="ls -a"
 alias :q="exit"
 
 # NVIM
 export PATH="$PATH:/opt/nvim-linux64/bin"
+
+# Zoxide
+eval -- "$(zoxide init zsh)"
 
 # Cargo
 . "$HOME/.cargo/env"
