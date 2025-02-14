@@ -24,6 +24,9 @@ alias :q="exit"
 # NVIM
 export PATH="$PATH:/opt/nvim-linux64/bin"
 
+# Cargo
+. "$HOME/.cargo/env"
+
 # fnm
 FNM_PATH="$HOME/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
@@ -32,5 +35,5 @@ if [ -d "$FNM_PATH" ]; then
 fi
 
 # Created by `pipx` on 2024-12-17 14:36:38
-export PATH="$PATH:/home/ldk/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
 autoload -U compinit; compinit
