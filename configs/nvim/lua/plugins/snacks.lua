@@ -34,7 +34,7 @@ return {
 			desc = "Find Files",
 		},
 		{
-			"<leader>b",
+			"<leader>fb",
 			function()
 				Snacks.picker.buffers({
 					on_show = function()
@@ -104,14 +104,44 @@ return {
 		},
 		-- Top Pickers & Explorerfals
 		{
-			"<leader>u",
+			"<leader>cs",
 			function()
 				Snacks.picker.colorschemes()
 			end,
 			desc = "Colorschemes",
 		},
-		-- { "<leader>xX", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
-		-- { "<leader>xx", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer Diagnostics" },
-		-- { "<leader>m", function() Snacks.picker.run({ cmd = "Copilot panel" }) end, mode = { "n" }, desc = "Copilot Panel in Snacks Picker" },
+		{
+			"<leader>xX",
+			function()
+				Snacks.picker.diagnostics({
+					on_show = function()
+						vim.cmd.stopinsert()
+					end,
+					finder = "diagnostics",
+					layout = "ivy",
+				})
+			end,
+			desc = "Diagnostics",
+		},
+		{
+			"<leader>xx",
+			function()
+				Snacks.picker.diagnostics_buffer({
+					on_show = function()
+						vim.cmd.stopinsert()
+					end,
+					finder = "diagnostics",
+					layout = "ivy",
+				})
+			end,
+			desc = "Buffer Diagnostics",
+		},
+		{
+			"<leader>gg",
+			function()
+				Snacks.lazygit()
+			end,
+			desc = "Lazygit",
+		},
 	},
 }
