@@ -1,6 +1,6 @@
 return {
-  'echasnovski/mini.pairs',
-  version = false,
-  lazy = true,
-  opts = {}
+	"echasnovski/mini.pairs",
+	version = false,
+	lazy = false,
+	opts = {},
 }
