@@ -7,13 +7,13 @@ ln -sf ~/dotfiles/assets/fonts ~/.fonts
 fc-cache -f -v
 
 # wallpapers
-ln -sf ~/dotfiles/assets/wallpapers ~/Pictures/Wallpapers
+# ln -sf ~/dotfiles/assets/wallpapers ~/Pictures/Wallpapers
 
 # themes
-ln -sf ~/dotfiles/assets/themes ~/.themes
+# ln -sf ~/dotfiles/assets/themes ~/.themes
 
 # icons/cursors
-ln -sf ~/dotfiles/assets/icons ~/.icons
+# ln -sf ~/dotfiles/assets/icons ~/.icons
 
 # zshrc
 ln -sf ~/dotfiles/configs/zshrc ~/.zshrc
