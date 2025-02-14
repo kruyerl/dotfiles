@@ -15,7 +15,6 @@ return {
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
 			local lspkind = require("lspkind")
-
 			require("copilot_cmp").setup()
 
 			cmp.setup({
@@ -96,7 +95,7 @@ return {
 				},
 			})
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "tsserver", "pyright" },
+				ensure_installed = { "lua_ls", "ts_ls", "pyright" },
 				automatic_installation = true,
 			})
 
@@ -105,7 +104,7 @@ return {
 			capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
 
 			-- Set up LSP servers
-			local servers = { "lua_ls", "tsserver", "pyright" }
+			local servers = { "lua_ls", "ts_ls", "pyright" }
 			for _, server in ipairs(servers) do
 				lspconfig[server].setup({
 					capabilities = capabilities,

@@ -32,6 +32,7 @@ return {
 		},
 	},
 	{ -- Core GitHub Copilot Setup
+
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
 
@@ -42,11 +43,11 @@ return {
 					enabled = true,
 					auto_refresh = true,
 					keymap = {
-						jump_prev = "<c-kj>",
-						jump_next = "<c-kj>",
-						accept = "<c-cr>",
+						jump_prev = "<C-k>",
+						jump_next = "<C-j>",
+						accept = "<Tab>",
 						refresh = "gr",
-						open = "<m-cr>",
+						open = "<S-Tab>",
 					},
 					layout = {
 						position = "bottom", -- | top | left | right | horizontal | vertical
@@ -62,8 +63,8 @@ return {
 						accept = "<C-l>",
 						accept_word = false,
 						accept_line = false,
-						next = "]]",
-						prev = "[[",
+						next = "<C-j>",
+						prev = "<C-k>",
 						dismiss = "<Esc>",
 					},
 				},
@@ -74,6 +75,7 @@ return {
 		end,
 		keys = {
 			{ "<leader>gp", "<cmd>Copilot panel<CR>", mode = { "n" }, desc = "Toggle Copilot Chat" },
+			{ "<leader>gs", "<Plug>(copilot-suggest)<CR>", mode = { "n" }, desc = "Toggle Copilot Chat" },
 		},
 	},
 

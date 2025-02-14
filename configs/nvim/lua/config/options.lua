@@ -3,6 +3,7 @@
 --
 local map = vim.keymap.set
 local opt = vim.opt
+local o = vim.o
 local cmd = vim.cmd
 local g = vim.g
 
@@ -46,11 +47,11 @@ opt.laststatus = 2 -- Always show status line
 opt.lazyredraw = true -- Optimize macro execution
 opt.list = true
 opt.listchars = {
-  tab = "┊ ",
-  trail = "·",
-  extends = "»",
-  precedes = "«",
-  nbsp = "×",
+	tab = "┊ ",
+	trail = "·",
+	extends = "»",
+	precedes = "«",
+	nbsp = "×",
 }
 opt.mouse = "a" -- Enable mouse support
 opt.number = true
@@ -67,16 +68,26 @@ opt.termguicolors = true -- 24-bit color support
 opt.foldmethod = "marker"
 opt.foldlevel = 99
 
-
-
 local disabled_builtins = {
-  "gzip", "zip", "zipPlugin", "tar", "tarPlugin",
-  "getscript", "getscriptPlugin", "vimball", "vimballPlugin",
-  "2html_plugin", "logipat", "rrhelper",
-  "netrw", "netrwPlugin", "netrwSettings", "netrwFileHandlers"
+	"gzip",
+	"zip",
+	"zipPlugin",
+	"tar",
+	"tarPlugin",
+	"getscript",
+	"getscriptPlugin",
+	"vimball",
+	"vimballPlugin",
+	"2html_plugin",
+	"logipat",
+	"rrhelper",
+	"netrw",
+	"netrwPlugin",
+	"netrwSettings",
+	"netrwFileHandlers",
 }
 for _, plugin in pairs(disabled_builtins) do
-  vim.g["loaded_" .. plugin] = 1
+	g["loaded_" .. plugin] = 1
 end
 
 opt.swapfile = false
@@ -85,7 +96,7 @@ opt.backup = false
 opt.writebackup = false
 opt.updatetime = 200 -- Faster completion (default is 4000ms)
 
+o.timeoutlen = 300 -- Default is 1000ms (1s), 300ms is usually snappier
 opt.lazyredraw = true -- Don't redraw while executing macros
 opt.synmaxcol = 200 -- Stop syntax highlighting at a certain column for performance
 opt.redrawtime = 1500 -- Increase max time before giving up on syntax highlight
-
