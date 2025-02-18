@@ -25,8 +25,6 @@ return {
 			function()
 				Snacks.picker.smart({
 					layout = "ivy",
-					finder = "files",
-					format = "file",
 					show_empty = true,
 					supports_live = true,
 				})

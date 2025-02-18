@@ -44,6 +44,10 @@ curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 chmod u+x nvim.appimage
 sudo mv nvim.appimage /usr/local/bin/nvim
 
+
+npm install -g neovim
+npm install -g eslint_d
+npm install -g @fsouza/prettierd
 # Install Yazi
 cargo install --locked --git https://github.com/sxyazi/yazi.git yazi-fm yazi-cli
 
