@@ -31,9 +31,6 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 . "$HOME/.cargo/env"
 rustup update
 
-# Install Yazi
-cargo install --locked yazi-fm yazi-cli
-
 # Configure Git
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
@@ -44,10 +41,10 @@ curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 chmod u+x nvim.appimage
 sudo mv nvim.appimage /usr/local/bin/nvim
 
+# TODO - NPM ISNT INSTALLED npm install -g neovim
+# TODO - NPM ISNT INSTALLED npm install -g eslint_d
+#TODO - NPM ISNT INSTALLED npm install -g @fsouza/prettierd
 
-npm install -g neovim
-npm install -g eslint_d
-npm install -g @fsouza/prettierd
 # Install Yazi
 cargo install --locked --git https://github.com/sxyazi/yazi.git yazi-fm yazi-cli
 
