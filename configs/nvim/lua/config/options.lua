@@ -1,102 +1,75 @@
--- Ensure this file is required in init.lua or config/init.lua
--- Options are automatically loaded before lazy.nvim startup
---
-local map = vim.keymap.set
-local opt = vim.opt
-local o = vim.o
-local cmd = vim.cmd
-local g = vim.g
+vim.opt.termguicolors = true
 
--- Indentation
-opt.autoindent = true
-opt.smartindent = true
-opt.shiftround = true
-opt.expandtab = true
-opt.tabstop = 2
-opt.softtabstop = 2
-opt.shiftwidth = 2
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.cursorline = true
+vim.opt.wrap = false
+vim.opt.scrolloff = 10
+vim.opt.sidescrolloff = 10
 
--- Leader Keys
-g.mapleader = " "
-g.maplocalleader = "\\"
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 2
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+vim.opt.autoindent = true
 
--- Backspace Behavior
-opt.backspace = { "eol", "start", "indent" }
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
 
--- Clipboard
-opt.clipboard = "unnamedplus" -- System clipboard access
+vim.opt.signcolumn = "yes"
+vim.opt.colorcolumn = "100"
+vim.opt.showmatch = true
+vim.opt.cmdheight = 1
+vim.opt.completeopt = "menuone,noinsert,noselect"
+vim.opt.showmode = false
+vim.opt.pumheight = 10
+vim.opt.pumblend = 10
+vim.opt.winblend = 0
+vim.opt.conceallevel = 2
+vim.opt.concealcursor = ""
+vim.opt.synmaxcol = 300
+vim.opt.fillchars = { eob = " " }
 
--- Encoding
-opt.fileencoding = "utf-8"
-opt.encoding = "utf-8"
-
--- Matching Pairs
-opt.matchpairs = { "(:)", "{:}", "[:]", "<:>" }
-
--- Search Settings
-opt.hlsearch = true
-opt.ignorecase = true
-opt.smartcase = true
-opt.wildignore:append({ "*/node_modules/*", "*/.git/*", "*/vendor/*" })
-opt.wildmenu = true
-
--- UI Settings
-opt.cmdheight = 0 -- Hide command line when not in use (NVIM 0.9+)
-opt.cursorline = false -- Highlight current line
-opt.laststatus = 2 -- Always show status line
-opt.lazyredraw = true -- Optimize macro execution
-opt.list = true
-opt.listchars = {
-	tab = "┊ ",
-	trail = "·",
-	extends = "»",
-	precedes = "«",
-	nbsp = "×",
-}
-opt.mouse = "a" -- Enable mouse support
-opt.number = true
-opt.relativenumber = true
-opt.signcolumn = "yes" -- Always show sign column
-opt.scrolloff = 18
-opt.sidescrolloff = 3
-opt.splitbelow = true
-opt.splitright = true
-opt.wrap = false
-opt.termguicolors = true -- 24-bit color support
-
--- Folding
-opt.foldmethod = "marker"
-opt.foldlevel = 99
-
-local disabled_builtins = {
-	"gzip",
-	"zip",
-	"zipPlugin",
-	"tar",
-	"tarPlugin",
-	"getscript",
-	"getscriptPlugin",
-	"vimball",
-	"vimballPlugin",
-	"2html_plugin",
-	"logipat",
-	"rrhelper",
-	"netrw",
-	"netrwPlugin",
-	"netrwSettings",
-	"netrwFileHandlers",
-}
-for _, plugin in pairs(disabled_builtins) do
-	g["loaded_" .. plugin] = 1
+local undodir = vim.fn.expand("~/.vim/undodir")
+if vim.fn.isdirectory(undodir) == 0 then
+  vim.fn.mkdir(undodir, "p")
 end
 
-opt.swapfile = false
-opt.undofile = true -- Set to true if you want persistent undo history
-opt.backup = false
-opt.writebackup = false
-opt.updatetime = 200 -- Faster completion (default is 4000ms)
+vim.opt.backup = false
+vim.opt.writebackup = false
+vim.opt.swapfile = false
+vim.opt.undofile = true
+vim.opt.undodir = undodir
+vim.opt.updatetime = 300
+vim.opt.timeoutlen = 500
+vim.opt.ttimeoutlen = 50
+vim.opt.autoread = true
+vim.opt.autowrite = false
 
-o.timeoutlen = 300 -- Default is 1000ms (1s), 300ms is usually snappier
-opt.lazyredraw = true -- Don't redraw while executing macros
-opt.synmaxcol = 200 -- Stop syntax highlighting at a certain column for performance
-opt.redrawtime = 1500 -- Increase max time before giving up on syntax highlight
+vim.opt.hidden = true
+vim.opt.errorbells = false
+vim.opt.backspace = "indent,eol,start"
+vim.opt.autochdir = false
+vim.opt.iskeyword:append("-")
+vim.opt.path:append("**")
+vim.opt.selection = "inclusive"
+vim.opt.mouse = "a"
+vim.opt.clipboard:append("unnamedplus")
+vim.opt.modifiable = true
+vim.opt.guicursor = "n-v-c:block,i-ci-ve:block,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
+
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldlevel = 99
+
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+
+vim.opt.wildmenu = true
+vim.opt.wildmode = "longest:full,full"
+vim.opt.diffopt:append("linematch:60")
+vim.opt.redrawtime = 10000
+vim.opt.maxmempattern = 20000

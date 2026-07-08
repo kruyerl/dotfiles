@@ -21,15 +21,6 @@ alias dotconf="nvim ~/dotfiles"
 alias la="ls -a"
 alias :q="exit"
 
-# NVIM
-export PATH="$PATH:/opt/nvim-linux64/bin"
-
-# Zoxide
-eval -- "$(zoxide init zsh)"
-
-# Cargo
-. "$HOME/.cargo/env"
-
 # fnm
 FNM_PATH="$HOME/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
@@ -40,3 +31,13 @@ fi
 # Created by `pipx` on 2024-12-17 14:36:38
 export PATH="$PATH:$HOME/.local/bin"
 autoload -U compinit; compinit
+
+# Fast Node Manager
+FNM_PATH="$HOME/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "`fnm env`"
+fi
+
+# Neovim
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
