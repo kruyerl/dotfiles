@@ -1,10 +1,8 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-
 vim.keymap.set('n','<leader>w',':write<CR>')
 vim.keymap.set('n','<leader>q',':quit<CR>')
-
 
 vim.keymap.set("n", "j", function()
   return vim.v.count == 0 and "gj" or "j"
@@ -26,6 +24,7 @@ vim.keymap.set({ "n", "v" }, "<leader>x", '"_d', { desc = "Delete without yankin
 vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
 
+--Split Handling
 vim.keymap.set("n", "<leader>sv", ":vsplit<CR>", { desc = "Split window vertically" })
 vim.keymap.set("n", "<leader>sh", ":split<CR>", { desc = "Split window horizontally" })
 vim.keymap.set("n", "<C-Up>", ":resize +2<CR>", { desc = "Increase window height" })
@@ -38,16 +37,20 @@ vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
 vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 
-vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
-vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines and keep cursor position" })
 
-vim.keymap.set("n", "<leader>pa", function()
-  local path = vim.fn.expand("%:p")
-  vim.fn.setreg("+", path)
-  print("file:", path)
-end, { desc = "Copy full file path" })
+--Smoother Indending
+vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
+vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
 
+-- Toggle Diagnostics
 vim.keymap.set("n", "<leader>td", function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = "Toggle diagnostics" })
+
+-- Copy filepath to the clipboard
+vim.keymap.set("n", "<leader>fp", function()
+    local filePath = vim.fn.expand("%:~")
+    vim.fn.setreg("+", filePath)
+    print("File path copied to clipboard: " .. filePath)
+end, { desc = "Copy file path to clipboard" })

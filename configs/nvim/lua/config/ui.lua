@@ -1,5 +1,3 @@
-vim.opt.termguicolors = true
-
 local ok = pcall(vim.cmd.colorscheme, "minisummer")
 if not ok then
   vim.cmd.colorscheme("habamax")
