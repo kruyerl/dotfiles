@@ -150,8 +150,8 @@ return {
         keys = {
             { "<leader>lg", function() require("snacks").lazygit() end, desc = "Lazygit" },
             { "<leader>gl", function() require("snacks").lazygit.log() end, desc = "Lazygit Logs" },
-            { "<leader>rN", function() require("snacks").rename.rename_file() end, desc = "Fast Rename Current File" },
-            { "<leader>dB", function() require("snacks").bufdelete() end, desc = "Delete or Close Buffer  (Confirm)" },
+            { "<leader>rn", function() require("snacks").rename.rename_file() end, desc = "Fast Rename Current File" },
+            { "<leader>db", function() require("snacks").bufdelete() end, desc = "Delete or Close Buffer  (Confirm)" },
 
             -- Snacks Picker
             { "<leader>pws", function() require("snacks").picker.grep_word() end, desc = "Search Visual selection or Word", mode = { "n", "x" } },

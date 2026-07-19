@@ -22,7 +22,7 @@ return {
                         auto_show = true,
                     },
                     ghost_text = {
-                        enabled = false,
+                        enabled = true,
                         show_with_menu = false,
                     },
                     accept = {

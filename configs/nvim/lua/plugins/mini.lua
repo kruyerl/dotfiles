@@ -1,9 +1,16 @@
 return{
-    { 'nvim-mini/mini.nvim', 
+    { 'nvim-mini/mini.nvim',
         version = false,
-        config = function() 
+    },
+    -- Starter Screen
+    { 'nvim-mini/mini.starter',
+        config = function()
             require('mini.starter').setup({})
-            --require('mini.statusline').setup({})
+        end
+    },
+    -- Top Buffer Tab 
+    { 'nvim-mini/mini.tabline',
+        config = function()
             require('mini.tabline').setup({})
         end
     },
