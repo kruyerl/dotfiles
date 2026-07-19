@@ -17,7 +17,7 @@ return {
             max_threads = 4,      -- Maximum threads for fuzzy search
             lazy_sync = true,
 
-            prompt = '🛸 ',       -- Input prompt symbol
+            prompt = '🔍 ',       -- Input prompt symbol
             layout = {
                 width = 0.90,          -- Window width as fraction of screen
                 height = 0.90,         -- Window height as fraction of screen
