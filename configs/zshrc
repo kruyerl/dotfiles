@@ -29,7 +29,7 @@ if [ -d "$FNM_PATH" ]; then
 fi
 
 # Created by `pipx` on 2024-12-17 14:36:38
-export PATH="$PATH:$HOME/.local/bin"
+export PATH="$HOME/.local/bin:$PATH"
 autoload -U compinit; compinit
 
 # Fast Node Manager
