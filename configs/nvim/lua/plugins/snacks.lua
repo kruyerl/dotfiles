@@ -130,7 +130,7 @@ return {
                 img_dirs = { "img", "images", "assets", "static", "public", "media", "attachments","Archives/All-Vault-Images/", "~/Library", "~/Downloads" },
             },
             dashboard = {
-                enabled = true,
+                enabled = false,
                 sections = {
                     { section = "header" },
                     { section = "keys", gap = 1, padding = 1 },
@@ -154,6 +154,9 @@ return {
             { "<leader>db", function() require("snacks").bufdelete() end, desc = "Delete or Close Buffer  (Confirm)" },
 
             -- Snacks Picker
+            { "<leader>ff", function() require("snacks").picker.files({ layout = "ivy" }) end, desc = "Find Files" },
+            { "<leader>fb", function() require("snacks").picker.buffers({ layout = "ivy" }) end, desc = "Find Buffers" },
+            { "<leader>fg", function() require("snacks").picker.grep({ layout = "ivy" }) end, desc = "Find Grep" },
             { "<leader>pws", function() require("snacks").picker.grep_word() end, desc = "Search Visual selection or Word", mode = { "n", "x" } },
             { "<leader>pk", function() require("snacks").picker.keymaps({ layout = "ivy" }) end, desc = "Search Keymaps (Snacks Picker)" },
 
