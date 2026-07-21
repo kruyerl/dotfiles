@@ -58,11 +58,10 @@ vim.opt.path:append("**")
 vim.opt.selection = "inclusive"
 vim.opt.mouse = "a"
 vim.opt.clipboard:append("unnamedplus")
-vim.opt.modifiable = true
 vim.opt.guicursor = "n-v-c:block,i-ci-ve:block,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
 
 vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldlevel = 99
 
 vim.opt.splitbelow = true

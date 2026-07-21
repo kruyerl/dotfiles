@@ -18,6 +18,7 @@ return {
             },
         },
     },
+    -- TODO move this keymap indide showkeys
     vim.keymap.set("n", "<leader>ks", "<cmd>ShowkeysToggle<CR>", {
         desc = "Toggle Showkeys",
     })
