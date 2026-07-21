@@ -1,39 +1,39 @@
 return {
-    -- for all git plugins 
+	-- for all git plugins
 	{
 		"tpope/vim-fugitive",
-        config = function()
-            vim.keymap.set("n", "<leader>gg", "<cmd>tabnew | Git | only<cr>", { desc = "Fugitive fullscreen tab", })
+		config = function()
+			vim.keymap.set("n", "<leader>gg", "<cmd>tabnew | Git | only<cr>", { desc = "Fugitive fullscreen tab" })
 
-            local myFugitive = vim.api.nvim_create_augroup("myFugitive", {})
+			local myFugitive = vim.api.nvim_create_augroup("myFugitive", {})
 
-            local autocmd = vim.api.nvim_create_autocmd
-            autocmd("BufWinEnter", {
-                group = myFugitive,
-                pattern = "*",
-                callback = function()
-                    if vim.bo.ft ~= "fugitive" then
-                        return
-                    end
+			local autocmd = vim.api.nvim_create_autocmd
+			autocmd("BufWinEnter", {
+				group = myFugitive,
+				pattern = "*",
+				callback = function()
+					if vim.bo.ft ~= "fugitive" then
+						return
+					end
 
-                    local bufnr = vim.api.nvim_get_current_buf()
-                    local opts = {buffer = bufnr, remap = false}
+					local bufnr = vim.api.nvim_get_current_buf()
+					local opts = { buffer = bufnr, remap = false }
 
-                    vim.keymap.set("n", "<leader>P", function()
-                        vim.cmd.Git('push')
-                    end, opts)
+					vim.keymap.set("n", "<leader>P", function()
+						vim.cmd.Git("push")
+					end, opts)
 
-                    -- NOTE: rebase always
-                    vim.keymap.set("n", "<leader>p", function()
-                        vim.cmd.Git({'pull',  '--rebase'})
-                    end, opts)
+					-- NOTE: rebase always
+					vim.keymap.set("n", "<leader>p", function()
+						vim.cmd.Git({ "pull", "--rebase" })
+					end, opts)
 
-                    -- NOTE: easy set up branch that wasn't setup properly
-                    vim.keymap.set("n", "<leader>t", ":Git push -u origin ", opts);
-                end,
-            })
-        end,
-    },
+					-- NOTE: easy set up branch that wasn't setup properly
+					vim.keymap.set("n", "<leader>t", ":Git push -u origin ", opts)
+				end,
+			})
+		end,
+	},
 	{
 		"lewis6991/gitsigns.nvim",
 		event = { "BufReadPre", "BufNewFile" },
@@ -64,67 +64,71 @@ return {
 				map("n", "<leader>gR", gs.reset_buffer, "Reset buffer") -- unstage whole buffer
 				map("n", "<leader>gu", gs.undo_stage_hunk, "Undo stage hunk")
 				map("n", "<leader>gp", gs.preview_hunk, "Preview hunk")
-				map("n", "<leader>gbl", function() gs.blame_line({ full = true }) end, "Blame line")
+				map("n", "<leader>gbl", function()
+					gs.blame_line({ full = true })
+				end, "Blame line")
 				map("n", "<leader>gB", gs.toggle_current_line_blame, "Toggle line blame")
 				map("n", "<leader>gd", gs.diffthis, "Diff this")
-				map("n", "<leader>gD", function() gs.diffthis("~") end, "Diff this ~")
+				map("n", "<leader>gD", function()
+					gs.diffthis("~")
+				end, "Diff this ~")
 
 				-- Text object
 				map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "Gitsigns select hunk")
 			end,
 		},
 	},
-    -- Lazy git 
-    {
-        "kdheepak/lazygit.nvim",
-        --NOTE: Trying out lazygit in Snacks nvim
-        enabled = false,
-        cmd = {
-            "LazyGit",
-            "LazyGitConfig",
-            "LazyGitCurrentFile",
-            "LazyGitFilter",
-            "LazyGitFilterCurrentFile",
-        },
-        -- window border thing
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-        -- setting up with keys={} allows plugin to load when command runs at the start
-        keys = {
-            { "<leader>lg", "<cmd>LazyGit<cr>", desc = "Open lazy git" },
-        },
-    },
+	-- Lazy git
+	{
+		"kdheepak/lazygit.nvim",
+		--NOTE: Trying out lazygit in Snacks nvim
+		enabled = false,
+		cmd = {
+			"LazyGit",
+			"LazyGitConfig",
+			"LazyGitCurrentFile",
+			"LazyGitFilter",
+			"LazyGitFilterCurrentFile",
+		},
+		-- window border thing
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		-- setting up with keys={} allows plugin to load when command runs at the start
+		keys = {
+			{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "Open lazy git" },
+		},
+	},
 
-    -- git worktree
-    {
-        "ThePrimeagen/git-worktree.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope.nvim",
-        },
+	-- git worktree
+	{
+		"ThePrimeagen/git-worktree.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim",
+		},
 
-        config = function()
-            local gitworktree = require("git-worktree")
+		config = function()
+			local gitworktree = require("git-worktree")
 
-            gitworktree.setup()
+			gitworktree.setup()
 
-            require("telescope").load_extension("git_worktree")
+			require("telescope").load_extension("git_worktree")
 
-            -- HACK: by default
-            -- <Enter> - switches to that worktree
-            -- <c-d> - deletes that worktree
-            -- <c-f> - toggles forcing of the next deletion
+			-- HACK: by default
+			-- <Enter> - switches to that worktree
+			-- <c-d> - deletes that worktree
+			-- <c-f> - toggles forcing of the next deletion
 
-            -- Create new worktree
-            vim.keymap.set("n", "<leader>wl", function()
-                require("telescope").extensions.git_worktree.git_worktrees()
-            end, { desc = "list Git Worktree" })
+			-- Create new worktree
+			vim.keymap.set("n", "<leader>wl", function()
+				require("telescope").extensions.git_worktree.git_worktrees()
+			end, { desc = "list Git Worktree" })
 
-            -- Switch/list worktrees
-            vim.keymap.set("n", "<leader>wc", function()
-                require("telescope").extensions.git_worktree.create_git_worktree()
-            end, { desc = "Create Git Worktree Branches" })
-        end,
-    }
+			-- Switch/list worktrees
+			vim.keymap.set("n", "<leader>wc", function()
+				require("telescope").extensions.git_worktree.create_git_worktree()
+			end, { desc = "Create Git Worktree Branches" })
+		end,
+	},
 }
