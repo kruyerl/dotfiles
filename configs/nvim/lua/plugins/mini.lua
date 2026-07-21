@@ -1,18 +1,19 @@
 return {
 	{ "nvim-mini/mini.nvim", version = false },
 	-- Starter Screen
+	-- {
+	-- 	"nvim-mini/mini.starter",
+	-- 	config = function()
+	-- 		require("mini.starter").setup({})
+	-- 	end,
+	-- },
+	-- Top Buffer Tab
 	{
-		"nvim-mini/mini.starter",
+		"nvim-mini/mini.tabline",
 		config = function()
-			require("mini.starter").setup({})
+			require("mini.tabline").setup({})
 		end,
 	},
-	-- Top Buffer Tab
-	-- { 'nvim-mini/mini.tabline',
-	--     config = function()
-	--         require('mini.tabline').setup({})
-	--     end
-	-- },
 	-- File explorer (this works properly with oil unlike nvim-tree)
 	{
 		"nvim-mini/mini.files",
@@ -95,20 +96,20 @@ return {
 			end, { desc = "Split arguments" })
 		end,
 	},
-	-- Mini Jump2d
-	{
-		"nvim-mini/mini.jump2d",
-		config = function()
-			local miniJump2d = require("mini.jump2d")
+	-- -- Mini Jump2d
+	-- {
+	-- 	"nvim-mini/mini.jump2d",
+	-- 	config = function()
+	-- 		local miniJump2d = require("mini.jump2d")
 
-			miniJump2d.setup({
-				allowed_lines = { cursor_before = true },
-				allowed_windows = { not_current = true },
-			})
+	-- 		miniJump2d.setup({
+	-- 			allowed_lines = { cursor_before = true },
+	-- 			allowed_windows = { not_current = true },
+	-- 		})
 
-			-- vim.keymap.set("n", "<leader>j", function() miniJump2d.start() end, { desc = "Jump2d" })
-		end,
-	},
+	-- 		-- vim.keymap.set("n", "<leader>j", function() miniJump2d.start() end, { desc = "Jump2d" })
+	-- 	end,
+	-- },
 	-- Mini Notify
 	{
 		"nvim-mini/mini.notify",
