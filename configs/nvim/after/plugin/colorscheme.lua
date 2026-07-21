@@ -19,7 +19,7 @@ local transparent_groups = {
 }
 
 for _, group in ipairs(transparent_groups) do
-  -- vim.api.nvim_set_hl(0, group, { bg = "none" })
+  vim.api.nvim_set_hl(0, group, { bg = "none" })
 end
 
 vim.api.nvim_set_hl(0, "TabLineFill", { bg = "none", fg = "#767676" })
