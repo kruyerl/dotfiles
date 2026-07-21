@@ -39,8 +39,8 @@ if [ -d "$FNM_PATH" ]; then
   eval "`fnm env`"
 fi
 
-# Neovim
-export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+# Neovim (bob)
+export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
 
 # Rust / Cargo
 if [ -f "$HOME/.cargo/env" ]; then
