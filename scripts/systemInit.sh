@@ -33,17 +33,37 @@ sudo apt update
 sudo apt upgrade -y
 sudo apt install -y zsh git curl
 
+# AUTO_ACCEPT_INSTALL=1 will skip confirmation and run the interactive installer
+# AUTO_RUN_SEED=1 will automatically run seedSetup.sh if the installer returns
+AUTO_ACCEPT_INSTALL="${AUTO_ACCEPT_INSTALL:-0}"
+AUTO_RUN_SEED="${AUTO_RUN_SEED:-0}"
+
 if [ "$MODE" = "interactive" ]; then
   echo "Running the interactive Oh My Zsh installer. This may open zsh and stop this script."
   echo "After the installer completes, re-run any remaining setup steps (e.g., ./scripts/seedSetup.sh)."
 
-  # Confirm with the user before running the interactive installer
-  read -r -p "Proceed with the interactive Oh My Zsh installer? [y/N] " RESP
-  RESP="${RESP:-N}"
-  if [[ "$RESP" =~ ^[Yy] ]]; then
-    # Run the official installer (interactive). It typically clones oh-my-zsh and then execs zsh.
+  if [ "$AUTO_ACCEPT_INSTALL" = "1" ]; then
+    echo "AUTO_ACCEPT_INSTALL=1: proceeding without prompt"
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    # If control returns (installer didn't exec zsh), offer to run seedSetup.sh automatically
+    RETURNED=0
+  else
+    # Confirm with the user before running the interactive installer
+    read -r -p "Proceed with the interactive Oh My Zsh installer? [y/N] " RESP
+    RESP="${RESP:-N}"
+    if [[ "$RESP" =~ ^[Yy] ]]; then
+      sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      RETURNED=0
+    else
+      echo "Skipping interactive installer. Run ./scripts/systemInit.sh --non-interactive for automated setup or run the installer manually later."
+      exit 0
+    fi
+  fi
+
+  # If control returns (installer didn't exec zsh), optionally run seed setup
+  if [ "$AUTO_RUN_SEED" = "1" ]; then
+    echo "AUTO_RUN_SEED=1: running seed setup now"
+    bash "$(dirname "${BASH_SOURCE[0]}")/seedSetup.sh"
+  else
     echo
     read -r -p "Installer returned. Run seed setup now to link dotfiles? [y/N] " RUN_SEED
     RUN_SEED="${RUN_SEED:-N}"
@@ -53,8 +73,6 @@ if [ "$MODE" = "interactive" ]; then
     else
       echo "Skipping seed setup. You can run ./scripts/seedSetup.sh later."
     fi
-  else
-    echo "Skipping interactive installer. Run ./scripts/systemInit.sh --non-interactive for automated setup or run the installer manually later."
   fi
   exit 0
 else
