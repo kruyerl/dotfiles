@@ -15,9 +15,11 @@ if [[ -n $SSH_CONNECTION ]]; then
    export EDITOR='nvim'
 fi
 
+export DOTFILES_DIR="$HOME/repos/dotfiles"
+
 # Aliases
-alias dotconf="nvim ~/repos/dotfiles"
-alias dev="$HOME/repos/dotfiles/scripts/dev.sh"
+alias dotconf="nvim $DOTFILES_DIR"
+alias dev="$DOTFILES_DIR/scripts/dev.sh"
 alias la="ls -a"
 alias :q="exit"
 
@@ -48,5 +50,5 @@ if [ -f "$HOME/.cargo/env" ]; then
 fi
 
 # Set PI agent dir to dotfiles-managed config
-export PI_CODING_AGENT_DIR="/home/kruyerl/repos/dotfiles/configs/pi"
+export PI_CODING_AGENT_DIR="$DOTFILES_DIR/configs/pi"
 

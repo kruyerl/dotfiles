@@ -1,0 +1,6 @@
+auth.json
+models-store.json
+settings.json
+sessions/
+.env
+.env.local

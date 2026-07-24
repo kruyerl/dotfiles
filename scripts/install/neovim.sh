@@ -1,21 +1,28 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Install Neovim into bob's expected directory (~/.local/share/bob/nvim-bin)
-# Supports NEOVIM_VERSION env var. Defaults to 'nightly'.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck disable=SC1091
+source "$SCRIPT_DIR/../lib/log.sh"
 
+LOG_NAMESPACE="install:neovim"
 NEOVIM_VERSION="${NEOVIM_VERSION:-nightly}"
 INSTALL_DIR="$HOME/.local/share/bob/nvim-bin"
 mkdir -p "$INSTALL_DIR"
 
-# If nvim is already available in PATH, skip installation
 if command -v nvim >/dev/null 2>&1; then
-  echo "[pi-install] nvim already available in PATH: $(command -v nvim)" && exit 0
+  log_info "nvim already available in PATH: $(command -v nvim)"
+  exit 0
 fi
 
-echo "[pi-install] Installing Neovim ($NEOVIM_VERSION) into $INSTALL_DIR"
 TMPDIR="$(mktemp -d)"
+trap 'rm -rf "$TMPDIR"' EXIT
+
 ARCHIVE="$TMPDIR/nvim.tar.gz"
+EXTRACT_DIR="$TMPDIR/extract"
+mkdir -p "$EXTRACT_DIR"
+
+log_info "installing Neovim ($NEOVIM_VERSION) into $INSTALL_DIR"
 
 case "$NEOVIM_VERSION" in
   nightly)
@@ -25,45 +32,46 @@ case "$NEOVIM_VERSION" in
     URL="https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
     ;;
   *)
-    # assume a tag like v0.9.3
     URL="https://github.com/neovim/neovim/releases/download/${NEOVIM_VERSION}/nvim-linux64.tar.gz"
     ;;
 esac
 
-echo "[pi-install] Downloading: $URL"
+clear_install_dir() {
+  find "$INSTALL_DIR" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+}
+
+install_appimage_fallback() {
+  log_warn "failed to download Neovim archive; falling back to latest appimage"
+  curl -fSL "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage" -o "$TMPDIR/nvim.appimage"
+  clear_install_dir
+  mv "$TMPDIR/nvim.appimage" "$INSTALL_DIR/nvim"
+  chmod +x "$INSTALL_DIR/nvim"
+  log_info "installed appimage as $INSTALL_DIR/nvim"
+}
+
+log_info "downloading $URL"
 if ! curl -fSL "$URL" -o "$ARCHIVE"; then
-  echo "[pi-install] Failed to download Neovim archive; falling back to appimage (latest)"
-  curl -fSL "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage" -o "$TMPDIR/nvim.appimage" || true
-  if [ -f "$TMPDIR/nvim.appimage" ]; then
-    chmod +x "$TMPDIR/nvim.appimage"
-    mv "$TMPDIR/nvim.appimage" "$INSTALL_DIR/nvim"
-    chmod +x "$INSTALL_DIR/nvim"
-    echo "[pi-install] Installed appimage as $INSTALL_DIR/nvim"
-    rm -rf "$TMPDIR"
-    exit 0
-  else
-    echo "[pi-install] No fallback available; aborting"
-    rm -rf "$TMPDIR"
-    exit 1
-  fi
+  install_appimage_fallback
+  exit 0
 fi
 
-mkdir -p "$TMPDIR/extract"
- tar -xzf "$ARCHIVE" -C "$TMPDIR/extract"
+tar -xzf "$ARCHIVE" -C "$EXTRACT_DIR"
 
-# The archive usually contains a directory like nvim-linux64/bin/nvim
-BIN_PATH="$(find "$TMPDIR/extract" -type f -path '*/bin/nvim' -print -quit)"
-if [ -z "$BIN_PATH" ]; then
-  echo "[pi-install] Couldn't find nvim binary in archive; aborting"
-  rm -rf "$TMPDIR"
+EXTRACTED_ROOT="$(find "$EXTRACT_DIR" -mindepth 1 -maxdepth 1 -type d -print -quit)"
+if [ -z "$EXTRACTED_ROOT" ]; then
+  log_error "couldn't find extracted Neovim directory"
   exit 1
 fi
 
-cp "$BIN_PATH" "$INSTALL_DIR/nvim"
-chmod +x "$INSTALL_DIR/nvim"
+if [ ! -x "$EXTRACTED_ROOT/bin/nvim" ]; then
+  log_error "couldn't find nvim binary in extracted archive"
+  exit 1
+fi
 
-rm -rf "$TMPDIR"
+clear_install_dir
+cp -a "$EXTRACTED_ROOT"/. "$INSTALL_DIR"/
+ln -sfn "$INSTALL_DIR/bin/nvim" "$INSTALL_DIR/nvim"
 
-echo "[pi-install] Neovim ($NEOVIM_VERSION) installed to $INSTALL_DIR/nvim"
-
-echo "Note: your shell config should include $HOME/.local/share/bob/nvim-bin in PATH (configs/zshrc already does this)"
+log_info "Neovim ($NEOVIM_VERSION) installed to $INSTALL_DIR"
+log_info "exposed executable at $INSTALL_DIR/nvim"
+log_info "ensure $HOME/.local/share/bob/nvim-bin is in PATH (configs/zshrc already does this)"

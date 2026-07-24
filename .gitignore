@@ -9,3 +9,11 @@ configs/pi/**/npm-debug.log
 # Other transient files created by npm installs
 configs/pi/**/.package-lock.json
 configs/pi/**/package-lock.json
+
+# Local Pi state and secrets should never be committed
+configs/pi/auth.json
+configs/pi/models-store.json
+configs/pi/settings.json
+configs/pi/sessions/
+configs/pi/.env
+configs/pi/.env.local

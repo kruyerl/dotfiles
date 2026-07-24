@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-# scripts/pi.sh - set up PI from this dotfiles repository
-# Usage: ./scripts/pi.sh [--no-export] [--install] [--install-deps] [--help]
+# scripts/pi.sh - set up Pi from this dotfiles repository
+# Usage: ./scripts/pi.sh [--install] [--install-deps] [--help]
 
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CONFIG_PI="$REPO_ROOT/configs/pi"
-ZSHRC_PATH="$REPO_ROOT/configs/zshrc"
 PI_DEST="$HOME/.pi/agent"
+# shellcheck disable=SC1091
+source "$REPO_ROOT/scripts/lib/node.sh"
 
-DO_EXPORT=1
 DO_INSTALL=0
 DO_INSTALL_DEPS=0
 
@@ -17,15 +17,11 @@ print_usage() {
   cat <<EOF
 Usage: $0 [options]
 Options:
-  --no-export        Do not add PI_CODING_AGENT_DIR to configs/zshrc
-  --export           Ensure configs/zshrc contains PI_CODING_AGENT_DIR (default)
   --install          Run ./scripts/npm to install pi (and other npm tools)
   --install-deps     Install npm deps for configs/pi and extensions (uses --ignore-scripts)
   --help             Show this help
 
-This script creates (or updates) a symlink at ~/.pi/agent -> $CONFIG_PI
-and optionally appends an export for PI_CODING_AGENT_DIR to $ZSHRC_PATH
-so your shell will point pi at the repo-managed config directory.
+This script creates (or updates) a symlink at ~/.pi/agent -> $CONFIG_PI.
 
 Run this from the repo (script handles locating the repo root).
 
@@ -35,11 +31,8 @@ project "prepare" scripts that may require developer tooling.
 EOF
 }
 
-# parse args
 while [[ ${#@} -gt 0 ]]; do
   case "$1" in
-    --no-export) DO_EXPORT=0; shift ;;
-    --export) DO_EXPORT=1; shift ;;
     --install) DO_INSTALL=1; shift ;;
     --install-deps) DO_INSTALL_DEPS=1; shift ;;
     --help) print_usage; exit 0 ;;
@@ -52,33 +45,14 @@ if [ ! -d "$CONFIG_PI" ]; then
   exit 1
 fi
 
-# Create ~/.pi and symlink
 mkdir -p "$HOME/.pi"
-
-# Use absolute path for link target
 ln -sfn "$CONFIG_PI" "$PI_DEST"
 
 echo "Created/updated symlink: $PI_DEST -> $CONFIG_PI"
 
-# Optionally add export to configs/zshrc (the dotfiles-managed file)
-if [ "$DO_EXPORT" -eq 1 ]; then
-  if [ -f "$ZSHRC_PATH" ]; then
-    EXPORT_LINE="export PI_CODING_AGENT_DIR=\"$CONFIG_PI\""
-    if rg -Fq "PI_CODING_AGENT_DIR" "$ZSHRC_PATH" 2>/dev/null; then
-      echo "configs/zshrc already contains PI_CODING_AGENT_DIR; skipping append"
-    else
-      echo -e "\n# Set PI agent dir to dotfiles-managed config\n$EXPORT_LINE\n" >> "$ZSHRC_PATH"
-      echo "Appended PI_CODING_AGENT_DIR to $ZSHRC_PATH"
-    fi
-  else
-    echo "Warning: $ZSHRC_PATH not found; skipping export addition" >&2
-  fi
-else
-  echo "Skipping export update as requested"
-fi
-
-# Optionally run npm helper to install pi globally
 if [ "$DO_INSTALL" -eq 1 ]; then
+  ensure_node_runtime
+
   if [ -x "$REPO_ROOT/scripts/npm" ] || [ -f "$REPO_ROOT/scripts/npm" ]; then
     echo "Running $REPO_ROOT/scripts/npm"
     bash "$REPO_ROOT/scripts/npm"
@@ -88,8 +62,9 @@ if [ "$DO_INSTALL" -eq 1 ]; then
   fi
 fi
 
-# Optionally install dependencies for the config and extensions
 if [ "$DO_INSTALL_DEPS" -eq 1 ]; then
+  ensure_node_runtime
+
   echo "Installing npm deps in $CONFIG_PI (ignore scripts)"
   (cd "$CONFIG_PI" && npm install --omit=dev --ignore-scripts)
 
@@ -100,8 +75,8 @@ if [ "$DO_INSTALL_DEPS" -eq 1 ]; then
     fi
   done
 
-  echo "Dependency installs complete. If you need development builds or to run prepare scripts,
-re-run installs without --ignore-scripts or follow extension-specific instructions in SETUP.md." 
+  echo "Dependency installs complete. If you need development builds or to run prepare scripts,"
+  echo "re-run installs without --ignore-scripts or follow extension-specific instructions in SETUP.md."
 fi
 
 echo "Done. Start pi with: pi"

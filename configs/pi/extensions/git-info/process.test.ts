@@ -37,7 +37,7 @@ test("renders platform failures without making callers handle them", async () =>
 
   assert.equal(result.code, 1);
   assert.match(result.stderr, new RegExp(`Failed to run ${command}:`));
-  assert.match(result.stderr, /NotFound|not found|ENOENT/i);
+  assert.match(result.stderr, /NotFound|not found|ENOENT|PermissionDenied/i);
 });
 
 test("reports command timeouts as failures", async () => {

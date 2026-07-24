@@ -1,3 +1,5 @@
- npm i -g hunkdiff
- npm install -g --ignore-scripts @earendil-works/pi-coding-agent
- 
+#!/usr/bin/env bash
+set -euo pipefail
+
+npm i -g hunkdiff
+npm install -g --ignore-scripts @earendil-works/pi-coding-agent

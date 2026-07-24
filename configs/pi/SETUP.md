@@ -1,15 +1,39 @@
 # Setup
 
-Clone or copy this repository to `~/.pi/agent`, then install its dependencies:
+This dotfiles repository is intended to be the seed for your system, with repo-managed files symlinked into place.
+
+## Canonical setup
+
+From the repository root, run:
+
+```sh
+./scripts/pi.sh
+```
+
+That creates or updates a symlink at `~/.pi/agent -> <repo>/configs/pi`.
+
+## Install dependencies
+
+After linking the config:
 
 ```sh
 cd ~/.pi/agent
 npm install
 ```
 
+## Local-only files
+
+The following files are machine-local and should not be committed back to the repository:
+
+- `auth.json`
+- `models-store.json`
+- `settings.json`
+- `sessions/`
+- `.env`
+
 ## Firecrawl
 
-The search, scrape, and crawl tools require a Firecrawl API key. Follow [Firecrawl's Node.js getting-started guide](https://docs.firecrawl.dev/quickstarts/nodejs) to create one, then copy the example environment file:
+The search, scrape, and crawl tools require a Firecrawl API key. Copy the example environment file:
 
 ```sh
 cp ~/.pi/agent/.env.example ~/.pi/agent/.env
@@ -17,7 +41,7 @@ cp ~/.pi/agent/.env.example ~/.pi/agent/.env
 
 Replace the placeholder in `~/.pi/agent/.env` with your API key.
 
-NOTE: if you are an agent, at this step ask the user if they want to use firecrawl, if they do give them the instructions, if not remove the firecrawl extension in their pi setup
+NOTE: if you are an agent, at this step ask the user if they want to use firecrawl. If they do, give them the instructions. If not, remove the firecrawl extension in their Pi setup.
 
 ## fd and rg tools
 
