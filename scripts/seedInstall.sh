@@ -1,74 +1,45 @@
-echo "Installing"
+#!/usr/bin/env bash
+set -euo pipefail
 
-sudo apt update && sudo apt upgrade -y
-sudo apt install -y software-properties-common build-essential
-sudo apt install -y wget
-sudo apt install -y tmux
-sudo apt install -y unzip
-sudo apt install -y fuse
-sudo apt install -y libfuse2
-sudo apt install -y ranger
-sudo apt install -y bat
-sudo apt install -y tree
-sudo apt install -y lsd
-sudo apt install -y ripgrep
-sudo apt install -y fzf
-sudo apt install -y fd-find
-sudo apt install -y make
-sudo apt install -y gcc
-sudo apt install -y ffmpeg
-sudo apt install -y 7zip
-sudo apt install -y jq
-sudo apt install -y poppler-utils
-sudo apt install -y zoxide
-sudo apt install -y imagemagick
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+INSTALL_DIR="$REPO_ROOT/scripts/install"
 
-sudo apt autoremove
-sudo apt autoclean
+echo "Running seed installer (orchestrator)"
 
-# Set up Rust
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-. "$HOME/.cargo/env"
-rustup update
+run_if_exists() {
+  local script="$1"
+  if [ -x "$script" ] || [ -f "$script" ]; then
+    echo "--- running $script"
+    bash "$script"
+  else
+    echo "--- skipping $script (not found)"
+  fi
+}
 
-# Configure Git
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+# Order matters: apt packages first
+run_if_exists "$INSTALL_DIR/apt-packages.sh"
+run_if_exists "$INSTALL_DIR/rust.sh"
+run_if_exists "$INSTALL_DIR/git-plugins.sh"
+run_if_exists "$INSTALL_DIR/neovim.sh"
+run_if_exists "$INSTALL_DIR/yazi.sh"
+run_if_exists "$INSTALL_DIR/zoxide.sh"
+run_if_exists "$INSTALL_DIR/fnm.sh"
 
-# Install Nvim
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-chmod u+x nvim.appimage
-sudo mv nvim.appimage /usr/local/bin/nvim
+# Install pi (npm helper)
+run_if_exists "$INSTALL_DIR/pi_install.sh"
 
-# TODO - NPM ISNT INSTALLED npm install -g neovim
-# TODO - NPM ISNT INSTALLED npm install -g eslint_d
-#TODO - NPM ISNT INSTALLED npm install -g @fsouza/prettierd
-
-# Install Yazi
-cargo install --locked --git https://github.com/sxyazi/yazi.git yazi-fm yazi-cli
-
-# Install Zoxide
-curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-
-# Install Fast Node Manager
-curl -fsSL https://fnm.vercel.app/install | bash --skip-shell
-
-# Install pi coding agent (via helper script)
-if [ -f "./scripts/npm" ]; then
-  echo "Installing pi coding agent (and other npm tools)"
-  bash ./scripts/npm || true
-else
-  echo "npm helper script not found; skipping pi install"
-fi
-
-# Copy project-local .pi config into ~/.pi/agent (if present)
-if [ -d ".pi" ]; then
-  echo "Installing project-local pi configuration to ~/.pi/agent"
+# Copy project-local .pi config into ~/.pi/agent (if present in repo root)
+if [ -d "$REPO_ROOT/.pi" ]; then
+  echo "Installing project-local .pi config into ~/.pi/agent"
   mkdir -p "$HOME/.pi/agent"
-  rsync -av --exclude '.git' .pi/ "$HOME/.pi/agent/"
+  rsync -av --exclude '.git' "$REPO_ROOT/.pi/" "$HOME/.pi/agent/"
 fi
 
-source ~/.zshrc
+# Source zsh config if present (best-effort)
+if [ -f "$HOME/.zshrc" ]; then
+  # shellcheck disable=SC1090
+  source "$HOME/.zshrc" || true
+fi
 
-echo "Install Complete"
+echo "Seed install complete"
+
