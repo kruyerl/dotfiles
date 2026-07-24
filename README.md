@@ -58,6 +58,11 @@ Legacy wrappers still exist:
 - `scripts/seedInstall.sh` / `scripts/seedSetup.sh`
   - compatibility wrappers for the older names
 
+## Agent context
+
+- Repo-wide agent guidance lives in `./AGENTS.md`
+- More specific agent instructions may exist in nested `AGENTS.md` files for subdirectories such as `configs/pi/`
+
 ## Notes
 
 - This repo is symlink-first; configs stay in the repo and are linked into `~` / `~/.config`
