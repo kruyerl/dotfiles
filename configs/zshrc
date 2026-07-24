@@ -16,8 +16,8 @@ if [[ -n $SSH_CONNECTION ]]; then
 fi
 
 # Aliases
-alias zshconf="nvim ~/.zshrc"
-alias dotconf="nvim ~/dotfiles"
+alias dotconf="nvim ~/repos/dotfiles"
+alias dev="$HOME/repos/dotfiles/scripts/dev.sh"
 alias la="ls -a"
 alias :q="exit"
 
@@ -46,3 +46,7 @@ export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
 if [ -f "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
 fi
+
+# Set PI agent dir to dotfiles-managed config
+export PI_CODING_AGENT_DIR="/home/kruyerl/repos/dotfiles/configs/pi"
+

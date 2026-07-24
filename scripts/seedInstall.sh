@@ -54,6 +54,21 @@ curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh 
 # Install Fast Node Manager
 curl -fsSL https://fnm.vercel.app/install | bash --skip-shell
 
+# Install pi coding agent (via helper script)
+if [ -f "./scripts/npm" ]; then
+  echo "Installing pi coding agent (and other npm tools)"
+  bash ./scripts/npm || true
+else
+  echo "npm helper script not found; skipping pi install"
+fi
+
+# Copy project-local .pi config into ~/.pi/agent (if present)
+if [ -d ".pi" ]; then
+  echo "Installing project-local pi configuration to ~/.pi/agent"
+  mkdir -p "$HOME/.pi/agent"
+  rsync -av --exclude '.git' .pi/ "$HOME/.pi/agent/"
+fi
+
 source ~/.zshrc
 
 echo "Install Complete"
