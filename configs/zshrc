@@ -17,6 +17,30 @@ fi
 
 export DOTFILES_DIR="$HOME/repos/dotfiles"
 
+# Reuse one SSH agent across shells and prompt for the key passphrase once per login session.
+SSH_AGENT_ENV="$HOME/.ssh/agent.env"
+
+load_ssh_agent() {
+  [ -f "$SSH_AGENT_ENV" ] || return 1
+  source "$SSH_AGENT_ENV" >/dev/null
+  [ -n "${SSH_AUTH_SOCK:-}" ] && [ -S "$SSH_AUTH_SOCK" ]
+}
+
+start_ssh_agent() {
+  mkdir -p "$HOME/.ssh"
+  (umask 077; ssh-agent -s > "$SSH_AGENT_ENV")
+  source "$SSH_AGENT_ENV" >/dev/null
+}
+
+if ! load_ssh_agent; then
+  start_ssh_agent
+fi
+
+if [ -f "$HOME/.ssh/id_ed25519" ] && ! ssh-add -l >/dev/null 2>&1; then
+  ssh-add "$HOME/.ssh/id_ed25519" < /dev/tty
+fi
+unset SSH_AGENT_ENV
+
 # Aliases
 alias dotconf="nvim $DOTFILES_DIR"
 alias dev="$DOTFILES_DIR/scripts/dev.sh"
