@@ -24,6 +24,10 @@ run_if_exists "$INSTALL_DIR/neovim.sh"
 run_if_exists "$INSTALL_DIR/yazi.sh"
 run_if_exists "$INSTALL_DIR/zoxide.sh"
 run_if_exists "$INSTALL_DIR/fnm.sh"
+run_if_exists "$INSTALL_DIR/bob.sh"
+
+# Install neovim (bob-aware)
+run_if_exists "$INSTALL_DIR/neovim.sh"
 
 # Install pi (npm helper)
 run_if_exists "$INSTALL_DIR/pi_install.sh"
