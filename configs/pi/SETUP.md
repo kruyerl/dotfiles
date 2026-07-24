@@ -12,6 +12,8 @@ From the repository root, run:
 
 That creates or updates a symlink at `~/.pi/agent -> <repo>/configs/pi`.
 
+If `~/.pi/agent` already exists as a real directory, the script now backs it up to `~/.pi/agent.backup-<timestamp>`, migrates known local state files, and then replaces it with the symlink.
+
 ## Install dependencies
 
 After linking the config:
@@ -20,6 +22,8 @@ After linking the config:
 cd ~/.pi/agent
 npm install
 ```
+
+If `~/.pi/agent` contains a nested `pi` symlink instead of being a symlink itself, rerun `./scripts/pi.sh` from the repo root to repair the layout first.
 
 ## Local-only files
 

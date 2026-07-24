@@ -24,6 +24,7 @@ From the repository root, run:
 ```
 
 That links `configs/pi` into `~/.pi/agent`.
+If `~/.pi/agent` already exists as a normal directory, the script backs it up and migrates it to the expected symlink layout.
 
 Then install dependencies:
 

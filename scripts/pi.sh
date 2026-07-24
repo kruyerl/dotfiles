@@ -45,8 +45,59 @@ if [ ! -d "$CONFIG_PI" ]; then
   exit 1
 fi
 
+migrate_existing_agent_dir() {
+  local backup_path timestamp
+  timestamp="$(date +%Y%m%d-%H%M%S)"
+  backup_path="$HOME/.pi/agent.backup-$timestamp"
+
+  echo "Found an existing directory at $PI_DEST; migrating it to a symlink"
+  mv "$PI_DEST" "$backup_path"
+  ln -s "$CONFIG_PI" "$PI_DEST"
+  echo "Backed up previous contents to: $backup_path"
+
+  for name in auth.json models-store.json settings.json .env .env.local; do
+    local src dst
+    src="$backup_path/$name"
+    dst="$CONFIG_PI/$name"
+
+    if [ ! -e "$src" ]; then
+      continue
+    fi
+
+    if [ ! -e "$dst" ]; then
+      mv "$src" "$dst"
+      echo "Moved $name into repo-managed pi config"
+      continue
+    fi
+
+    if cmp -s "$src" "$dst"; then
+      rm -f "$src"
+      echo "Skipped identical $name"
+      continue
+    fi
+
+    echo "Kept existing $dst; review backup copy at $src if you need it"
+  done
+
+  if [ -d "$backup_path/sessions" ]; then
+    mkdir -p "$CONFIG_PI/sessions"
+    cp -a "$backup_path/sessions/." "$CONFIG_PI/sessions/"
+    echo "Merged sessions into repo-managed pi config"
+  fi
+}
+
 mkdir -p "$HOME/.pi"
-ln -sfn "$CONFIG_PI" "$PI_DEST"
+
+if [ -L "$PI_DEST" ]; then
+  ln -sfn "$CONFIG_PI" "$PI_DEST"
+elif [ -d "$PI_DEST" ]; then
+  migrate_existing_agent_dir
+elif [ -e "$PI_DEST" ]; then
+  rm -f "$PI_DEST"
+  ln -s "$CONFIG_PI" "$PI_DEST"
+else
+  ln -s "$CONFIG_PI" "$PI_DEST"
+fi
 
 echo "Created/updated symlink: $PI_DEST -> $CONFIG_PI"
 
