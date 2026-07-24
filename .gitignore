@@ -1,2 +1,11 @@
+# Ignore node modules installed for the pi config and its extensions
+configs/pi/node_modules/
+configs/pi/**/node_modules/
 
-configs/pi/node_modules
+# Ignore package lock files that may be created when installing deps for configs/pi
+configs/pi/**/package-lock.json
+configs/pi/**/npm-debug.log
+
+# Other transient files created by npm installs
+configs/pi/**/.package-lock.json
+configs/pi/**/package-lock.json
