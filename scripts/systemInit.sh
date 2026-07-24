@@ -36,9 +36,26 @@ sudo apt install -y zsh git curl
 if [ "$MODE" = "interactive" ]; then
   echo "Running the interactive Oh My Zsh installer. This may open zsh and stop this script."
   echo "After the installer completes, re-run any remaining setup steps (e.g., ./scripts/seedSetup.sh)."
-  # Run the official installer (interactive). It typically clones oh-my-zsh and then execs zsh.
-  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  # Note: the above installer often execs zsh and thus control may not return here.
+
+  # Confirm with the user before running the interactive installer
+  read -r -p "Proceed with the interactive Oh My Zsh installer? [y/N] " RESP
+  RESP="${RESP:-N}"
+  if [[ "$RESP" =~ ^[Yy] ]]; then
+    # Run the official installer (interactive). It typically clones oh-my-zsh and then execs zsh.
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    # If control returns (installer didn't exec zsh), offer to run seedSetup.sh automatically
+    echo
+    read -r -p "Installer returned. Run seed setup now to link dotfiles? [y/N] " RUN_SEED
+    RUN_SEED="${RUN_SEED:-N}"
+    if [[ "$RUN_SEED" =~ ^[Yy] ]]; then
+      echo "Running ./scripts/seedSetup.sh"
+      bash "$(dirname "${BASH_SOURCE[0]}")/seedSetup.sh"
+    else
+      echo "Skipping seed setup. You can run ./scripts/seedSetup.sh later."
+    fi
+  else
+    echo "Skipping interactive installer. Run ./scripts/systemInit.sh --non-interactive for automated setup or run the installer manually later."
+  fi
   exit 0
 else
   echo "Non-interactive mode: cloning Oh My Zsh and creating a template .zshrc"
