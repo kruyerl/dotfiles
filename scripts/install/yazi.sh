@@ -18,6 +18,20 @@ if ! command -v cargo >/dev/null 2>&1; then
 fi
 
 log_info "installing yazi via cargo"
-cargo install --locked --git https://github.com/sxyazi/yazi.git yazi-fm yazi-cli || true
+
+if ! cargo install --locked --force yazi-build; then
+  log_warn "failed to install yazi-build helper; skipping yazi install"
+  exit 0
+fi
+
+if cargo install --locked yazi-fm yazi-cli; then
+  log_info "yazi install complete"
+  exit 0
+fi
+
+log_warn "crates.io install failed; retrying from git source"
+if ! cargo install --locked --git https://github.com/sxyazi/yazi.git yazi-fm yazi-cli; then
+  log_warn "yazi install failed; continuing without yazi"
+fi
 
 log_info "yazi install step complete"
