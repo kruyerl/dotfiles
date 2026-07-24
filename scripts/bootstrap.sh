@@ -155,17 +155,23 @@ run_repo_setup() {
     echo "Clone-only mode complete. Next steps:"
     echo "  cd $DOTFILES_DIR && ./scripts/install.sh"
     echo "  cd $DOTFILES_DIR && ./scripts/setup.sh"
+    echo
+    echo "Note: after ./scripts/setup.sh links the repo-managed zsh config, new zsh shells will reuse a shared ssh-agent and should only ask for your SSH key passphrase once per login session."
     return 0
   fi
 
   if confirm "Run ./scripts/systemInit.sh from the cloned repo now?" Y; then
     bash "$DOTFILES_DIR/scripts/systemInit.sh"
+    echo
+    echo "If setup linked your zsh config, new zsh shells will now reuse a shared ssh-agent and should only ask for your SSH key passphrase once per login session."
   else
     echo "You can continue later with either:"
     echo "  cd $DOTFILES_DIR && ./scripts/systemInit.sh"
     echo "or the explicit phases:"
     echo "  cd $DOTFILES_DIR && ./scripts/install.sh"
     echo "  cd $DOTFILES_DIR && ./scripts/setup.sh"
+    echo
+    echo "After ./scripts/setup.sh links the repo-managed zsh config, new zsh shells will reuse a shared ssh-agent and should only ask for your SSH key passphrase once per login session."
   fi
 }
 
