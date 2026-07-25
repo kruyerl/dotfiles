@@ -62,3 +62,19 @@ Add the included theme to `~/.pi/agent/settings.json` while keeping your existin
 ```
 
 Pi will load the extensions, skills, and theme from their directories the next time it starts.
+
+## Packages
+
+This setup uses the `pi-web-access` npm package for web search, URL fetching, GitHub repo cloning, and video/PDF understanding. Because `settings.json` is machine-local (see above), the package must be (re)installed on each new machine. Either run:
+
+```sh
+./scripts/pi.sh --install-packages
+```
+
+or install directly:
+
+```sh
+pi install npm:pi-web-access
+```
+
+This writes an entry to `~/.pi/agent/settings.json` and installs the package under `~/.pi/agent/npm/`. It works with no API keys out of the box (zero-config Exa search). To use other providers (OpenAI, Brave, Parallel, Tavily, Perplexity, Gemini), add keys to `~/.pi/web-search.json` — see the [pi-web-access README](https://github.com/nicobailon/pi-web-access) for details.

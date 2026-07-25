@@ -2,6 +2,9 @@
 configs/pi/node_modules/
 configs/pi/**/node_modules/
 
+# Installed pi packages (reinstalled per-machine via 'pi install' / scripts/pi.sh --install-packages)
+configs/pi/npm/
+
 # Ignore package lock files that may be created when installing deps for configs/pi
 configs/pi/**/package-lock.json
 configs/pi/**/npm-debug.log

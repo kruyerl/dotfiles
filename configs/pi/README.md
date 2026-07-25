@@ -10,6 +10,7 @@ This setup is fairly opinionated. It:
 - adds workflows to pi
 - adds an ask user tool, which lets the model ask multiple choice questions
 - adds first-class `fd` (file discovery) and `rg` (content search) tools
+- installs the `pi-web-access` package for web search, URL fetching, and GitHub repo cloning (see [SETUP.md](SETUP.md#packages))
 
 ![Pi setup interface](assets/pi-setup.jpeg)
 

@@ -12,6 +12,13 @@ source "$REPO_ROOT/scripts/lib/node.sh"
 
 DO_INSTALL=0
 DO_INSTALL_DEPS=0
+DO_INSTALL_PACKAGES=0
+
+# Pi packages this setup expects to be installed (via 'pi install').
+# settings.json is machine-local, so these must be (re)installed on each new machine.
+PI_PACKAGES=(
+  "npm:pi-web-access"
+)
 
 print_usage() {
   cat <<EOF
@@ -19,6 +26,7 @@ Usage: $0 [options]
 Options:
   --install          Run ./scripts/npm to install pi (and other npm tools)
   --install-deps     Install npm deps for configs/pi (uses --ignore-scripts)
+  --install-packages Install pi packages (e.g. pi-web-access) via 'pi install'
   --help             Show this help
 
 This script creates (or updates) a symlink at ~/.pi/agent -> $CONFIG_PI.
@@ -35,6 +43,7 @@ while [[ ${#@} -gt 0 ]]; do
   case "$1" in
     --install) DO_INSTALL=1; shift ;;
     --install-deps) DO_INSTALL_DEPS=1; shift ;;
+    --install-packages) DO_INSTALL_PACKAGES=1; shift ;;
     --help) print_usage; exit 0 ;;
     *) echo "Unknown arg: $1"; print_usage; exit 1 ;;
   esac
@@ -121,6 +130,17 @@ if [ "$DO_INSTALL_DEPS" -eq 1 ]; then
 
   echo "Dependency install complete for configs/pi."
   echo "If you need extension-local development builds, run installs in those extension folders manually."
+fi
+
+if [ "$DO_INSTALL_PACKAGES" -eq 1 ]; then
+  if command -v pi >/dev/null 2>&1; then
+    for pkg in "${PI_PACKAGES[@]}"; do
+      echo "Installing pi package: $pkg"
+      pi install "$pkg"
+    done
+  else
+    echo "pi CLI not found on PATH; skipping package install" >&2
+  fi
 fi
 
 echo "Done. Start pi with: pi"
