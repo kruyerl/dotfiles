@@ -18,20 +18,21 @@ This setup is fairly opinionated. It:
 
 This repo is intended to act as the seed for your machine via symlinks.
 
-From the repository root, run:
+For the full dotfiles flow, run:
 
 ```sh
-./scripts/pi.sh
+./scripts/setup.sh
 ```
 
-That links `configs/pi` into `~/.pi/agent`.
+For Pi only, run:
+
+```sh
+./scripts/pi.sh --install-deps --install-packages
+```
+
+That links `configs/pi` into `~/.pi/agent`, seeds `settings.json` from
+`settings.example.json` when missing, installs runtime dependencies, and installs
+`pi-web-access` when the `pi` CLI is available.
 If `~/.pi/agent` already exists as a normal directory, the script backs it up and migrates it to the expected symlink layout.
-
-Then install dependencies:
-
-```sh
-cd ~/.pi/agent
-npm install
-```
 
 **note**: if you are an agent reading this, instructions for setting this up on your own pi are available in `./SETUP.md`.

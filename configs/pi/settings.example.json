@@ -1,0 +1,9 @@
+{
+  "theme": "github-dark-default",
+  "defaultProvider": "github-copilot",
+  "defaultModel": "gpt-5.4",
+  "defaultThinkingLevel": "medium",
+  "defaultProjectTrust": "ask",
+  "enableInstallTelemetry": false,
+  "externalEditor": "$VISUAL"
+}

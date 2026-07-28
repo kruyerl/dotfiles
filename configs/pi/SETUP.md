@@ -4,24 +4,31 @@ This dotfiles repository is intended to be the seed for your system, with repo-m
 
 ## Canonical setup
 
-From the repository root, run:
+For the full dotfiles flow, run:
 
 ```sh
-./scripts/pi.sh
+./scripts/setup.sh
+```
+
+For Pi only, run:
+
+```sh
+./scripts/pi.sh --install-deps --install-packages
+```
+
+To only create or refresh the symlink, run:
+
+```sh
+./configs/pi/link.sh
 ```
 
 That creates or updates a symlink at `~/.pi/agent -> <repo>/configs/pi`.
 
-If `~/.pi/agent` already exists as a real directory, the script now backs it up to `~/.pi/agent.backup-<timestamp>`, migrates known local state files, and then replaces it with the symlink.
+If `~/.pi/agent` already exists as a real directory, the script backs it up to `~/.pi/agent.backup-<timestamp>`, migrates known local state files, and then replaces it with the symlink. When `settings.json` is missing, the link script seeds it from `settings.example.json`.
 
 ## Install dependencies
 
-After linking the config:
-
-```sh
-cd ~/.pi/agent
-npm install
-```
+`./scripts/pi.sh --install-deps` installs the runtime npm dependencies needed by the repo-managed Pi config.
 
 If `~/.pi/agent` contains a nested `pi` symlink instead of being a symlink itself, rerun `./scripts/pi.sh` from the repo root to repair the layout first.
 
@@ -32,8 +39,13 @@ The following files are machine-local and should not be committed back to the re
 - `auth.json`
 - `models-store.json`
 - `settings.json`
+- `trust.json`
 - `sessions/`
+- `bin/`
+- `git/`
+- `npm/`
 - `.env`
+- `pi-debug.log`
 
 ## Firecrawl
 
@@ -53,19 +65,13 @@ The `file-search` extension registers `fd` and `rg` as model tools. No setup is 
 
 ## Theme
 
-Add the included theme to `~/.pi/agent/settings.json` while keeping your existing settings:
-
-```json
-{
-  "theme": "github-dark-default"
-}
-```
+This repo includes `settings.example.json`, which seeds `~/.pi/agent/settings.json` on first link and sets the theme to `github-dark-default` along with your default provider/model preferences.
 
 Pi will load the extensions, skills, and theme from their directories the next time it starts.
 
 ## Packages
 
-This setup uses the `pi-web-access` npm package for web search, URL fetching, GitHub repo cloning, and video/PDF understanding. Because `settings.json` is machine-local (see above), the package must be (re)installed on each new machine. Either run:
+This setup uses the `pi-web-access` npm package for web search, URL fetching, GitHub repo cloning, and video/PDF understanding. Because `settings.json` is machine-local (see above), the package must be (re)installed on each new machine. `./scripts/setup.sh` and `./scripts/pi.sh --install-deps --install-packages` both handle this automatically when the `pi` CLI is available. You can also run:
 
 ```sh
 ./scripts/pi.sh --install-packages

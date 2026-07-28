@@ -8,7 +8,9 @@ print_usage() {
 Usage: $0 [--skip-pi] [--help]
 
 Links repo-managed configs into your home directory.
-By default it also links the Pi config and installs its local dependencies.
+By default it also links the Pi config, seeds local Pi settings when missing,
+installs its local dependencies, and installs configured Pi packages when the
+pi CLI is available.
 
 Options:
   --skip-pi   Link dotfiles but skip Pi setup
@@ -31,7 +33,7 @@ bash "$SCRIPT_DIR/install/link-configs.sh" --backup
 
 if [ "$SETUP_PI" -eq 1 ]; then
   echo "Running Pi setup"
-  bash "$SCRIPT_DIR/pi.sh" --install-deps
+  bash "$SCRIPT_DIR/pi.sh" --install-deps --install-packages
 fi
 
 echo "Setup phase complete. You may need to reload your shell or log out and back in."
