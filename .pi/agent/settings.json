@@ -1,6 +1,0 @@
-{
-  "defaultProjectTrust": "ask",
-  "enableInstallTelemetry": false,
-  "externalEditor": "$VISUAL",
-  "promptCacheRetention": "long"
-}
